@@ -1,6 +1,6 @@
 "use client";
 
-import { api } from "@/api";
+import { apiFetch } from "@/api";
 import { createOrderApi } from "@/api/orderApi";
 import AddressMethod from "@/components/checkout/AddressMethod";
 import ContactForm from "@/components/checkout/ContactForm";
@@ -8,7 +8,7 @@ import DeliveryForm from "@/components/checkout/DeliveryForm";
 import OrderSummary from "@/components/checkout/OrderSummary";
 import PaymentMethod from "@/components/checkout/PaymentMethod";
 import { useDispatch, useSelector } from "react-redux";
-import { applyCoupon, removeCoupon, fetchCart } from "@/lib/features/cartSlice";
+import { applyCoupon, removeCoupon } from "@/lib/features/cartSlice";
 import { createOrder } from "@/lib/features/orderSlice";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,14 +22,10 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const {
-    cart,
-    initialized,
-    loading: loadingCart,
-  } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
+  const { initialized, loading: loadingCart } = cart;
 
-  const { loading } = useSelector((state) => state.order);
-
+  const [submitting, setSubmitting] = useState(false);
   const [shipping, setShipping] = useState(null);
   const [zones, setZones] = useState([]);
 
@@ -42,8 +38,8 @@ export default function CheckoutPage() {
   useEffect(() => {
     const getShippingZonesApi = async () => {
       try {
-        const res = await api.get("/shipping-zones");
-        setZones(res.data.zones);
+        const { data } = await apiFetch({ path: "/shipping-zones", method: "GET" });
+        setZones(data?.data?.zones || data?.zones);
       } catch (err) {
         console.error(err);
       }
@@ -81,13 +77,12 @@ export default function CheckoutPage() {
         postal: "",
       },
       addressMethod: "same",
-      paymentMethod: "",
+      paymentMethod: "cash",
     },
   });
 
   const paymentMethod = watch("paymentMethod");
 
-  // ================= VALIDATION =================
   const validateBeforePayment = () => {
     const data = getValues();
 
@@ -104,7 +99,6 @@ export default function CheckoutPage() {
     return true;
   };
 
-  // ================= PAYLOAD =================
   const buildPayload = (data) => ({
     contactEmail: data.contact.email,
     shippingAddress: {
@@ -138,28 +132,30 @@ export default function CheckoutPage() {
   }, []);
 
   const submitOrder = async (data) => {
+    setSubmitting(true);
     try {
       const payload = {
         ...buildPayload(data),
         paymentMethod: "cash",
       };
 
-      const resultAction = await dispatch(createOrder(payload));
+      const order = await dispatch(createOrder(payload)).unwrap();
 
-      if (createOrder.fulfilled.match(resultAction)) {
-        const order = resultAction.payload;
-        toast.success("Order Created");
-        router.replace(`/order-confirmation/${order._id}`);
+      if (!order?._id) {
+        toast.error("Order created but missing ID");
+        return;
       }
+      toast.success("Order Created");
+      router.replace(`/order-confirmation/${order._id}`);
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Order failed");
+      toast.error(error || "Order failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const onSubmit = (data) => {
-    if (data.paymentMethod === "cash") {
-      submitOrder(data);
-    }
+  const onSubmit = async (data) => {
+    await submitOrder(data);
   };
 
   const handlePayPal = async () => {
@@ -191,7 +187,7 @@ export default function CheckoutPage() {
 
       window.location.href = res.approvalUrl;
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Payment init failed");
+      toast.error(err || "Payment init failed");
     } finally {
       setPaypalLoading(false);
     }
@@ -215,13 +211,12 @@ export default function CheckoutPage() {
 
       setLoadingCoupon(true);
 
-      await dispatch(applyCoupon(coupon.trim()));
-      await dispatch(fetchCart());
+      await dispatch(applyCoupon(coupon.trim())).unwrap();
 
       setCoupon("");
       setErrorCoupon("");
     } catch (err) {
-      setErrorCoupon(err?.response?.data?.message || "Invalid coupon");
+      setErrorCoupon(err || "Invalid coupon");
     } finally {
       setLoadingCoupon(false);
     }
@@ -231,8 +226,7 @@ export default function CheckoutPage() {
     try {
       setLoadingRemove(true);
 
-      await dispatch(removeCoupon());
-      await dispatch(fetchCart());
+      await dispatch(removeCoupon()).unwrap();
 
       setCoupon("");
       setErrorCoupon("");
@@ -248,7 +242,6 @@ export default function CheckoutPage() {
   const hasItems =
     initialized && Array.isArray(cart?.items) && cart.items.length > 0;
 
-  // 1. LOADING FIRST (NO EMPTY EVER HERE)
   if (isLoadingCart) {
     return <CheckoutSkeleton />;
   }
@@ -307,15 +300,15 @@ export default function CheckoutPage() {
           ) : (
             <button
               type="submit"
-              disabled={loading}
+              disabled={submitting}
               className="w-full bg-black text-white py-3 rounded-lg"
             >
-              {loading ? "Processing..." : "Complete Order"}
+              {submitting ? "Processing..." : "Complete Order"}
             </button>
           )}
         </div>
 
-        {/* RIGHT */}
+        {}
         <div className="p-6 lg:p-10 lg:sticky lg:top-6 self-start">
           <OrderSummary
             cart={cart}

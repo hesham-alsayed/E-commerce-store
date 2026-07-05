@@ -10,19 +10,16 @@ export function OTPInput({ length = 6, onComplete, disabled = false }) {
   const handleChange = (index, value) => {
     if (disabled) return;
 
-    // Only allow single digit
     const digit = value.replace(/\D/g, "").slice(-1);
 
     const newOtp = [...otp];
     newOtp[index] = digit;
     setOtp(newOtp);
 
-    // Move to next input
     if (digit && index < length - 1) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    // Check complete
     const completeOtp = newOtp.join("");
     if (completeOtp.length === length && onComplete) {
       onComplete(completeOtp);
@@ -66,7 +63,6 @@ export function OTPInput({ length = 6, onComplete, disabled = false }) {
 
       setOtp(newOtp);
 
-      // focus next empty
       const nextEmptyIndex = newOtp.findIndex((val) => !val);
 
       if (nextEmptyIndex !== -1) {

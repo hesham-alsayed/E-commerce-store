@@ -15,12 +15,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import { updateQuantity, removeFromCart } from "@/lib/features/cartSlice";
 import CartPageSkeleton from "@/skeleton/CartPageSkeleton";
 import { FiShoppingCart } from "react-icons/fi";
+import { toast } from "sonner";
 
 export default function CartPage() {
   const dispatch = useDispatch();
-  const { cart, loading } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
+  const { loading, initialized } = cart;
 
-  const isLoading = loading || !cart;
+  const isLoading = loading || !cart || !initialized;
 
   if (isLoading) {
     return <CartPageSkeleton />;
@@ -29,19 +31,22 @@ export default function CartPage() {
   const items = cart?.items ?? [];
 
   const increase = (item) => {
-    dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity + 1 }));
+    dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity + 1 }))
+      .unwrap()
+      .catch((err) => toast.error(err || "Error updating quantity"));
   };
 
   const decrease = (item) => {
     if (item.quantity > 1) {
-      dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity - 1 }));
+      dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity - 1 }))
+        .unwrap()
+        .catch((err) => toast.error(err || "Error updating quantity"));
     }
   };
 
   const handleRemove = (item) => {
     dispatch(removeFromCart(item._id));
   };
-
 
   if (!isLoading && items.length === 0) {
     return (
@@ -64,7 +69,7 @@ export default function CartPage() {
     <>
       {items.length > 0 ? (
         <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* LEFT */}
+          {}
           <div className="lg:col-span-2 space-y-6">
             <h1 className="text-[30px]">Your cart ({items.length})</h1>
 
@@ -119,7 +124,7 @@ export default function CartPage() {
             ))}
           </div>
 
-          {/* RIGHT */}
+          {}
           <div>
             <Card className="p-5 space-y-5 bg-white border rounded-xl shadow-sm">
               <Accordion title="Discount code" icon={TbDiscount}>

@@ -27,7 +27,7 @@ export default function UploadAvatarModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* MODAL */}
+          {}
           <_motion.div
             onClick={(e) => e.stopPropagation()}
             className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 text-center space-y-5"
@@ -36,7 +36,7 @@ export default function UploadAvatarModal({
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {/* CLOSE BUTTON */}
+            {}
             <button
               onClick={onClose}
               disabled={loading}
@@ -45,13 +45,13 @@ export default function UploadAvatarModal({
               <X size={20} />
             </button>
 
-            {/* IMAGE */}
+            {}
             <img
               src={preview}
               className="w-52 h-52 mx-auto rounded-full object-cover border"
             />
 
-            {/* ACTIONS */}
+            {}
             <div className="flex justify-center gap-3 pt-2">
               <Button onClick={handleSaveImage} disabled={loading}>
                 {loading ? (

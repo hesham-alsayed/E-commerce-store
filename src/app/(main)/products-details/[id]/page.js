@@ -14,7 +14,7 @@ export default function ProductDetailsPage() {
   const [position, setPosition] = useState({ x: 50, y: 50 });
 
   const dispatch = useDispatch();
-  const { loading, product } = useSelector((state) => state.products);
+  const { loading, product, error } = useSelector((state) => state.products);
   const { id } = useParams();
 
   useEffect(() => {
@@ -57,6 +57,10 @@ export default function ProductDetailsPage() {
     return product?.variants?.find((v) => v.color === selectedColor);
   }, [product, selectedColor]);
 
+  if (error && !product) {
+    return <div className="text-center py-20 text-red-500 text-sm">{error}</div>;
+  }
+
   if (!product || loading) return <ProductDetailsSkeleton />;
 
   const discount = Math.round(
@@ -74,9 +78,9 @@ export default function ProductDetailsPage() {
   return (
     <section className="mt-17 px-3 sm:px-4">
       <div className="max-w-7xl mx-auto bg-white rounded-xl p-3 sm:p-4 overflow-hidden">
-        {/* ✅ GRID WITH COL SPAN */}
+        {}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* ✅ IMAGES BIGGER */}
+          {}
           <div className="lg:col-span-7">
             <ProductImages
               currentVariant={currentVariant}
@@ -88,7 +92,7 @@ export default function ProductDetailsPage() {
             />
           </div>
 
-          {/* ✅ INFO SMALLER */}
+          {}
           <div className="lg:col-span-5">
             <ProductInfo
               product={product}
@@ -105,7 +109,7 @@ export default function ProductDetailsPage() {
             />
           </div>
         </div>
-        {/* REVIEWS */}
+        {}
         <div className="pt-10">
           <CustomerReviews
             reviewsStats={product.reviewsStats}

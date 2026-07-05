@@ -14,7 +14,6 @@ import { Button } from "./ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "@/lib/features/authSlice";
 
-
 export function SignupForm({ onLoginClick }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -49,8 +48,7 @@ export function SignupForm({ onLoginClick }) {
       const email = res.data.user.email;
       router.push(`/auth/verify-email/?email=${email}`);
     } catch (error) {
-      console.log(error);
-      showToast({ message: error.response.data.message, type: "error" });
+      showToast({ message: error || "Signup failed", type: "error" });
     }
   };
 

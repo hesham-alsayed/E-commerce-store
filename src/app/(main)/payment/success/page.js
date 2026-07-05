@@ -34,7 +34,7 @@ export default function SuccessOrder() {
           router.replace(`/order-success/${res.order._id}`);
         }, 1200);
       } catch (err) {
-        toast.error(err?.response?.data?.message || "Payment failed");
+        toast.error(err?.message || err || "Payment failed");
 
         setTimeout(() => {
           router.replace("/checkout");

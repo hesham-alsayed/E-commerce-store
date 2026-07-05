@@ -4,14 +4,14 @@ import "react-loading-skeleton/dist/skeleton.css";
 export default function DashboardPageSkeleton() {
   return (
     <div className="min-h-screen mb-3">
-      {/* ROUTE */}
+      {}
       <div className="max-w-6xl mx-auto mb-6">
         <Skeleton height={20} width={200} />
       </div>
 
       <div className="max-w-6xl mx-auto space-y-8">
 
-        {/* PROFILE SECTION */}
+        {}
         <div className="bg-white rounded-2xl p-6 shadow flex flex-col md:flex-row gap-6 items-center md:items-start">
           <Skeleton circle width={112} height={112} />
 
@@ -27,7 +27,7 @@ export default function DashboardPageSkeleton() {
           </div>
         </div>
 
-        {/* SUMMARY CARDS */}
+        {}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-white p-6 rounded-2xl shadow flex gap-4 items-center">
@@ -40,7 +40,7 @@ export default function DashboardPageSkeleton() {
           ))}
         </div>
 
-        {/* CURRENT ORDERS */}
+        {}
         <div className="bg-white rounded-2xl shadow p-6 space-y-4">
           <Skeleton width={180} height={20} />
 

@@ -17,7 +17,7 @@ import OrderInvoiceSkeleton from "@/skeleton/OrderInvoiceSkeleton";
 export default function OrderInvoicePage() {
   const { orderId } = useParams();
   const dispatch = useDispatch();
-  const { currentOrder: order } = useSelector((state) => state.order);
+  const { currentOrder: order, error } = useSelector((state) => state.order);
 
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -61,10 +61,14 @@ export default function OrderInvoicePage() {
 
     window.location.reload();
   };
+  if (error && !order) {
+    return <div className="text-center py-20 text-red-500 text-sm">{error}</div>;
+  }
+
   if (!order) return <OrderInvoiceSkeleton />;
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto mt-20 ">
       <InvoiceActions
         onPrint={() => handlePrint()}
         onDownload={downloadPDF}

@@ -50,7 +50,7 @@ export default function ShareProduct({ url, title }) {
 
       <span className="text-sm">Share</span>
 
-      {/* Facebook */}
+      {}
       <button
         onClick={() => openPopup(shareLinks.facebook)}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"
@@ -58,16 +58,15 @@ export default function ShareProduct({ url, title }) {
         <FiFacebook size={18} />
       </button>
 
-      {/* Twitter */}
+      {}
       <button
         onClick={() => openPopup(shareLinks.twitter)}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"
       >
         <FiTwitter size={18} />
       </button>
-    
 
-      {/* WhatsApp */}
+      {}
       <button
         onClick={() => openPopup(shareLinks.whatsapp)}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"
@@ -75,7 +74,7 @@ export default function ShareProduct({ url, title }) {
         <FaWhatsapp size={18} />
       </button>
 
-      {/* Telegram */}
+      {}
       <button
         onClick={() => openPopup(shareLinks.telegram)}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"
@@ -83,7 +82,7 @@ export default function ShareProduct({ url, title }) {
         <FaTelegramPlane size={18} />
       </button>
 
-      {/* Native mobile share */}
+      {}
       <button
         onClick={nativeShare}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"
@@ -91,7 +90,7 @@ export default function ShareProduct({ url, title }) {
         <FiShare2 size={18} />
       </button>
 
-      {/* Copy link */}
+      {}
       <button
         onClick={copyLink}
         className="hover:text-black hover:bg-gray-200 transition rounded p-2"

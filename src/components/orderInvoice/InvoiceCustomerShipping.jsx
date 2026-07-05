@@ -6,7 +6,7 @@ export default function InvoiceCustomerShipping({ order }) {
     <Card>
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
 
-        {/* CUSTOMER */}
+        {}
         <div>
           <p className="font-bold flex items-center gap-2 mb-2">
             <User size={16} /> Customer
@@ -25,7 +25,7 @@ export default function InvoiceCustomerShipping({ order }) {
           </div>
         </div>
 
-        {/* SHIPPING */}
+        {}
         <div>
           <p className="font-bold flex items-center gap-2 mb-2">
             <Truck size={16} /> Shipping

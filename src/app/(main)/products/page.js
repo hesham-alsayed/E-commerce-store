@@ -19,7 +19,6 @@ import EmptyProducts from "@/views/EmptyProducts";
 import Footer from "@/components/Footer";
 import FeaturedSection from "@/components/FeaturedSection";
 
-// ================= GRID ONLY MAPPING =================
 const getGrid = (columns) => {
   const map = {
     1: "grid-cols-1",
@@ -52,6 +51,7 @@ export default function ProductsPage() {
     loading,
     pagination,
     allProducts,
+    error,
   } = useSelector((state) => state.products);
 
   const [columns, setColumns] = useState(2);
@@ -71,16 +71,16 @@ export default function ProductsPage() {
   return (
     <>
       <div className="container mx-auto mt-20 px-4 mb-20">
-        {/* SEARCH */}
+        {}
         <SearchResultBar
           applySearch={applySearch}
           searchParams={searchParams}
           setFilter={setFilter}
         />
 
-        {/* TOOLBAR */}
+        {}
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          {/* LEFT ACTIONS */}
+          {}
           <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={() => setOpenFilters(true)}
@@ -101,7 +101,7 @@ export default function ProductsPage() {
             <SortAndLimit searchParams={searchParams} setFilter={setFilter} />
           </div>
 
-          {/* RIGHT */}
+          {}
           <div className="flex items-center gap-3">
             <Pagination
               currentPage={pagination.currentPage}
@@ -113,7 +113,7 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        {/* MODALS */}
+        {}
         <SearchModal
           openSearch={openSearch}
           setOpenSearch={(val) => dispatch(setOpenSearch(val))}
@@ -135,7 +135,12 @@ export default function ProductsPage() {
           products={products}
         />
 
-        {loading ? (
+        {error ? (
+          <div className="text-center py-20">
+            <p className="text-red-500 text-sm">{error}</p>
+            <button onClick={resetFilters} className="mt-4 text-sm underline">Try again</button>
+          </div>
+        ) : loading ? (
           <ProductsPageSkeleton />
         ) : products.length === 0 ? (
           <EmptyProducts

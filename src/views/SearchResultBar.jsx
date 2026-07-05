@@ -16,14 +16,13 @@ export default function SearchResultBar({ searchParams, applySearch }) {
     check();
   }, [searchValue]);
 
-  // 🔍 SEARCH
   const handleSearch = () => {
     applySearch(value);
   };
 
   const clearSearch = () => {
     setValue("");
-    applySearch(""); // 🔥 clear URL + fetch default
+    applySearch(""); 
   };
 
   if(!searchValue) return null

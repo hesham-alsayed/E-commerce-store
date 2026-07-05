@@ -24,7 +24,7 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Billing address</h2>
 
-      {/* hidden input */}
+      {}
       <input
         type="hidden"
         {...register("addressMethod", {
@@ -37,7 +37,7 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
         onValueChange={handleChange}
         className="border rounded-lg overflow-hidden"
       >
-        {/* SAME */}
+        {}
         <div
           className={`flex items-center gap-3 px-4 py-3 cursor-pointer ${
             addressMethod === "same" ? "bg-muted" : ""
@@ -51,7 +51,7 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
 
         <div className="border-t" />
 
-        {/* DIFFERENT */}
+        {}
         <div
           className={`px-4 py-3 ${
             addressMethod === "different" ? "bg-muted" : ""
@@ -64,12 +64,12 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
             </Label>
           </div>
 
-          {/* FORM */}
+          {}
           {addressMethod === "different" && (
             <div className="space-y-4 mt-4">
               <Input value="Egypt" readOnly />
 
-              {/* First & Last */}
+              {}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Input
@@ -100,7 +100,7 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
                 </div>
               </div>
 
-              {/* Address */}
+              {}
               <div>
                 <Input
                   placeholder="Address"
@@ -115,7 +115,7 @@ export default function AddressMethod({ register, setValue, watch, errors }) {
                 )}
               </div>
 
-              {/* City / Governorate / Postal */}
+              {}
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <Input

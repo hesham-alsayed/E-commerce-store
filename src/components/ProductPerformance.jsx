@@ -13,13 +13,13 @@ export default function ProductPerformance() {
 
         return (
           <div key={index} className="space-y-1">
-            {/* title + rating */}
+            {}
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">{item.name}</span>
               <span className="font-medium">{item.value}/5</span>
             </div>
 
-            {/* progress bar */}
+            {}
             <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
               <div
                 className="h-full bg-black rounded-full"

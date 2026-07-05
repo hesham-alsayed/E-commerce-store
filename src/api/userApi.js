@@ -1,39 +1,36 @@
-import { api } from ".";
-
-
+import { apiFetch } from ".";
 
 export const getWishlistApi = async () => {
-  const res = await api.get(`/users/wishlist`);
+  const res = await apiFetch({ path: "/users/wishlist", method: "GET" });
   return res.data;
 };
 
 export const addToWishlistApi = async (productId) => {
-  const res = await api.post(`/users/wishlist`, { productId });
+  const res = await apiFetch({ path: "/users/wishlist", method: "POST", body: JSON.stringify({ productId }) });
   return res.data;
 };
 
 export const removeFromWishlistApi = async (productId) => {
-  const res = await api.delete(`/users/wishlist/${productId}`);
+  const res = await apiFetch({ path: `/users/wishlist/${productId}`, method: "DELETE" });
   return res.data;
 };
 
-
 export const getAddresses = async () => {
-  const res = await api.get(`/users/me/addresses`);
-  return res.data.data;
+  const res = await apiFetch({ path: "/users/me/addresses", method: "GET" });
+  return res.data;
 };
 
 export const addAddress = async (data) => {
-  const res = await api.post(`/users/me/addresses`, data);
-  return res.data.data;
+  const res = await apiFetch({ path: "/users/me/addresses", method: "POST", body: JSON.stringify(data) });
+  return res.data;
 };
 
 export const updateAddress = async (id, data) => {
-  const res = await api.patch(`/users/me/addresses/${id}`, data);
-  return res.data.data;
+  const res = await apiFetch({ path: `/users/me/addresses/${id}`, method: "PATCH", body: JSON.stringify(data) });
+  return res.data;
 };
 
 export const deleteAddress = async (id) => {
-  const res = await api.delete(`/users/me/addresses/${id}`);
-  return res.data.data;
+  const res = await apiFetch({ path: `/users/me/addresses/${id}`, method: "DELETE" });
+  return res.data;
 };

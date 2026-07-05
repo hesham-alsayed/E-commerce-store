@@ -3,12 +3,11 @@ import { CreditCard, Receipt, DollarSign } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { statusStyle } from "@/lib/utils";
 
-
 export default function InvoicePaymentSummary({ order }) {
   return (
     <Card className="border-gray-100 shadow-sm">
       <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-        {/* PAYMENT */}
+        {}
         <div className="space-y-3">
           <p className="font-semibold flex items-center gap-2 text-gray-800">
             <CreditCard size={16} className="text-gray-500" />
@@ -38,7 +37,7 @@ export default function InvoicePaymentSummary({ order }) {
           </Badge>
         </div>
 
-        {/* SUMMARY */}
+        {}
         <div className="space-y-3">
           <p className="font-semibold flex items-center gap-2 text-gray-800">
             <Receipt size={16} className="text-gray-500" />
@@ -65,7 +64,6 @@ export default function InvoicePaymentSummary({ order }) {
   );
 }
 
-/* SMALL CLEAN ROW */
 function Row({ label, value, muted }) {
   return (
     <div className="flex justify-between">

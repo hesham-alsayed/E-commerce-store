@@ -40,7 +40,7 @@ export default function CustomDropdown({
         {label}
       </label>
 
-      {/* TRIGGER */}
+      {}
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
@@ -67,7 +67,7 @@ export default function CustomDropdown({
         />
       </button>
 
-      {/* DROPDOWN */}
+      {}
       <AnimatePresence>
         {open && (
           <m.div

@@ -10,8 +10,8 @@ import { logout } from "@/lib/features/authSlice";
 export default function Icons({ setShopCartOpen }) {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
-  const { cart } = useSelector(state => state.cart);
-  const count = cart?.items?.length || 0;
+  const cart = useSelector(state => state.cart);
+  const count = cart.initialized ? (cart?.items?.length || 0) : null;
   const router = useRouter();
 
   const handleLogout = async () => {

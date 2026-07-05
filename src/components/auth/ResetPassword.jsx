@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter, useParams } from "next/navigation";
 import LoaderSpinnerButton from "@/components/LoaderSpinnerButton";
 import { KeyRound, CheckCircle, XCircle } from "lucide-react";
+import { toast } from "sonner";
 import { resetPassword } from "@/api/authApi";
 
 export default function ResetPassword() {
@@ -55,10 +56,9 @@ export default function ResetPassword() {
         router.push("/auth?mode=login");
       }, 200);
     } catch (err) {
-      const message = err?.response?.data?.message;
+      const message = err?.message || err;
 
       if (
-        err?.response?.status === 401 ||
         message?.toLowerCase().includes("expired") ||
         message?.toLowerCase().includes("invalid")
       ) {
@@ -66,7 +66,7 @@ export default function ResetPassword() {
         return;
       }
 
-      console.log(err);
+      toast.error(message || "Password reset failed");
     } finally {
       setLoading(false);
     }

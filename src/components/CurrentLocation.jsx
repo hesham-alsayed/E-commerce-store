@@ -12,7 +12,6 @@ export default function CurrentLocation() {
 
       <span className="font-semibold">{pathParts[0]}</span>
 
-     
       {pathParts.slice(1).map((part, idx) => (
         <span key={idx} className="capitalize">
           {" > "}{part}

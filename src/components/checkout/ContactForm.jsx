@@ -7,7 +7,7 @@ export default function ContactForm({ register, errors }) {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Contact</h2>
 
-      {/* EMAIL */}
+      {}
       <div>
         <Input
           placeholder="Enter your email"

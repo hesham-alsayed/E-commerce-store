@@ -1,17 +1,17 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrderById } from "@/lib/features/orderSlice";
 import { clearCart } from "@/lib/features/cartSlice";
-import Logo from "@/assets/logo kazary.webp";
 import { useEffect, useState } from "react";
 import OrderConfirmationSkeleton from "@/skeleton/OrderConfirmationSkeleton";
 
 export default function OrderConfirmationPage() {
   const { orderId } = useParams();
+  const router = useRouter();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.order);
+  const { loading, error } = useSelector((state) => state.order);
 
   const [order, setOrder] = useState(null);
 
@@ -28,6 +28,7 @@ export default function OrderConfirmationPage() {
         setOrder(order);
       } catch (err) {
         console.error(err);
+        router.replace("/checkout");
       }
     };
 
@@ -42,12 +43,12 @@ export default function OrderConfirmationPage() {
 
   return (
     <div className="max-w-200 mx-auto my-10 p-6 bg-white rounded-lg shadow-md font-sans text-gray-900 border border-gray-200">
-      {/* Logo */}
+      {}
       <div className="flex justify-center mb-6">
-        <img src={Logo} alt="logo" className="w-28 object-contain" />
+        <img src="/logo.webp" alt="logo" height={40} width={160} className="w-28 object-contain" />
       </div>
 
-      {/* Heading */}
+      {}
       <h1 className="text-2xl font-semibold mb-1">Your Order Confirmed!</h1>
 
       <p className="mb-4">Hi {order.user?.firstName || "Customer"},</p>
@@ -56,7 +57,7 @@ export default function OrderConfirmationPage() {
         Your order has been confirmed and will be shipping soon.
       </p>
 
-      {/* Order Info */}
+      {}
       <div className="flex justify-between text-xs text-gray-600 border-t border-b border-gray-300 py-3 mb-6">
         <div className="flex-1 text-center">
           <div className="font-semibold mb-1">Order Date</div>
@@ -79,7 +80,7 @@ export default function OrderConfirmationPage() {
         </div>
       </div>
 
-      {/* Items */}
+      {}
       <div className="space-y-4 border-b border-gray-300 pb-4 mb-6">
         {order.items?.map((item) => (
           <div key={item._id} className="flex items-center gap-4">
@@ -107,7 +108,7 @@ export default function OrderConfirmationPage() {
         ))}
       </div>
 
-      {/* Summary */}
+      {}
       <div className="text-sm text-gray-700 mb-6 space-y-1">
         <div className="flex justify-between">
           <span>Subtotal</span>
@@ -127,13 +128,13 @@ export default function OrderConfirmationPage() {
         )}
       </div>
 
-      {/* Total */}
+      {}
       <div className="flex justify-between font-bold text-lg border-t border-gray-300 pt-4 mb-6">
         <span>Total</span>
         <span>E£ {order.totalPriceAfterDiscount}</span>
       </div>
 
-      {/* Footer */}
+      {}
       <p className="mb-6 text-gray-600 text-sm leading-relaxed">
         We'll send you shipping confirmation when your item(s) are on the way!
       </p>

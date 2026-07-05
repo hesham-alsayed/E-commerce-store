@@ -21,7 +21,6 @@ export default function DeliveryForm({
 }) {
   const [selectedZone, setSelectedZone] = useState(null);
 
-  // ✅ governorate
   const handleZoneChange = (zoneName) => {
     setValue("delivery.governorate", zoneName, {
       shouldValidate: true,
@@ -35,7 +34,6 @@ export default function DeliveryForm({
     setShipping(null);
   };
 
-  // ✅ city
   const handleCityChange = (cityName) => {
     setValue("delivery.city", cityName, {
       shouldValidate: true,
@@ -59,7 +57,7 @@ export default function DeliveryForm({
 
       <Input value="Egypt" readOnly className="bg-muted cursor-not-allowed" />
 
-      {/* FIRST & LAST */}
+      {}
       <div className="flex items-center gap-3">
         <div className="flex flex-col gap-2 w-1/2">
           <Input
@@ -85,7 +83,7 @@ export default function DeliveryForm({
         </div>
       </div>
 
-      {/* ADDRESS */}
+      {}
       <Input
         placeholder="Address"
         {...register("delivery.address", {
@@ -93,7 +91,7 @@ export default function DeliveryForm({
         })}
       />
 
-      {/* GOVERNORATE */}
+      {}
       <div className="grid grid-cols-6 gap-4">
         <div className="col-span-2">
           <Select onValueChange={handleZoneChange}>
@@ -114,7 +112,7 @@ export default function DeliveryForm({
           </Select>
         </div>
 
-        {/* CITY */}
+        {}
         <div className="col-span-2">
           <Select onValueChange={handleCityChange} disabled={!selectedZone}>
             <SelectTrigger className="w-full focus:ring-0 focus:ring-offset-0 outline-none">
@@ -134,7 +132,7 @@ export default function DeliveryForm({
           </Select>
         </div>
 
-        {/* POSTAL */}
+        {}
         <div className="col-span-2">
           <Input
             placeholder="Postal code"
@@ -145,7 +143,7 @@ export default function DeliveryForm({
         </div>
       </div>
 
-      {/* CHECKBOX */}
+      {}
       <div className="flex items-center space-x-2">
         <Checkbox
           id="saveInfo"

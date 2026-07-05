@@ -8,7 +8,8 @@ import { clearCart } from "@/lib/features/cartSlice";
 
 export default function HeaderCart({ setShopCartOpen }) {
   const dispatch = useDispatch();
-  const { loading, cart } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
+  const { loading } = cart;
 
   const count = cart?.items?.length || 0;
 

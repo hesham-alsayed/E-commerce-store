@@ -6,10 +6,10 @@ export default function Footer() {
     <footer className="z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         
-        {/* Top Section */}
+        {}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 justify-items-start  sm:text-left">
           
-          {/* Newsletter */}
+          {}
           <div className="  sm:mx-0 max-w-sm">
             <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
 
@@ -34,7 +34,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Shop */}
+          {}
           <div>
             <h3 className="text-lg font-semibold mb-4">Shop</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -53,7 +53,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
+          {}
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
             <ul className="space-y-2 text-gray-600 text-sm">
@@ -72,7 +72,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Follow Us */}
+          {}
           <div className="flex flex-col">
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
 
@@ -93,7 +93,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Line */}
+        {}
         <div className="border-t mt-12 pt-6 text-center text-sm text-gray-600">
           © 2024, CompileTab. All Rights Reserved.
         </div>

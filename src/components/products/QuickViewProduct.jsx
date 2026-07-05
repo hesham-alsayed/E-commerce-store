@@ -16,7 +16,7 @@ import { addToCart, updateQuantity } from "@/lib/features/cartSlice";
 
 const QuickViewProduct = ({ isOpen, onClose, product }) => {
   const dispatch = useDispatch();
-  const { cart } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
 
   const discount = resolveDiscount(product);
   const validDiscount = isDiscountValid(discount) ? discount : null;
@@ -76,7 +76,9 @@ const QuickViewProduct = ({ isOpen, onClose, product }) => {
     }
 
     if (cartItem) {
-      dispatch(updateQuantity({ id: cartItem._id, quantity: cartItem.quantity + 1 }));
+      dispatch(updateQuantity({ itemId: cartItem._id, quantity: cartItem.quantity + 1 }))
+        .unwrap()
+        .catch((err) => toast.error(err || "Error updating quantity"));
     } else {
       setQty((prev) => prev + 1);
     }
@@ -85,7 +87,9 @@ const QuickViewProduct = ({ isOpen, onClose, product }) => {
   const decrease = () => {
     if (cartItem) {
       if (cartItem.quantity > 1) {
-        dispatch(updateQuantity({ id: cartItem._id, quantity: cartItem.quantity - 1 }));
+        dispatch(updateQuantity({ itemId: cartItem._id, quantity: cartItem.quantity - 1 }))
+          .unwrap()
+          .catch((err) => toast.error(err || "Error updating quantity"));
       }
     } else {
       setQty((prev) => Math.max(1, prev - 1));
@@ -125,7 +129,7 @@ const QuickViewProduct = ({ isOpen, onClose, product }) => {
 
       onClose();
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Error adding to cart");
+      toast.error(err || "Error adding to cart");
     } finally {
       setLoadingAdd(false);
     }

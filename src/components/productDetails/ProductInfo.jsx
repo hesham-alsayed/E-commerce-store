@@ -32,7 +32,7 @@ export default function ProductInfo({
   const discount = resolveDiscount(product);
   const router = useRouter();
   const dispatch = useDispatch();
-  const { cart } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
   const hasDiscount = Boolean(discount);
   const finalPrice = getFinalPrice(product.price, discount);
 
@@ -80,7 +80,9 @@ export default function ProductInfo({
     }
 
     if (cartItem) {
-      dispatch(updateQuantity({ id: cartItem._id, quantity: next }));
+      dispatch(updateQuantity({ itemId: cartItem._id, quantity: next }))
+        .unwrap()
+        .catch((err) => toast.error(err || "Error updating quantity"));
     } else {
       setQuantity((p) => {
         if (p + (cartItem?.quantity || 0) + 1 > availableStock) {
@@ -95,7 +97,9 @@ export default function ProductInfo({
   const decrease = () => {
     if (cartItem) {
       if (cartItem.quantity > 1) {
-        dispatch(updateQuantity({ id: cartItem._id, quantity: cartItem.quantity - 1 }));
+        dispatch(updateQuantity({ itemId: cartItem._id, quantity: cartItem.quantity - 1 }))
+          .unwrap()
+          .catch((err) => toast.error(err || "Error updating quantity"));
       }
     } else {
       setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -131,7 +135,7 @@ export default function ProductInfo({
         },
       })).unwrap();
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Error adding to cart");
+      toast.error(err || "Error adding to cart");
     } finally {
       setLoadingAdd(false);
     }
@@ -169,7 +173,7 @@ export default function ProductInfo({
 
       router.push("/checkout");
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Checkout failed");
+      toast.error(err || "Checkout failed");
     } finally {
       setLoadingBuy(false);
     }
@@ -270,13 +274,13 @@ export default function ProductInfo({
 
       <div className="flex items-center gap-4 mb-6">
         <div className="flex items-center border rounded px-3 py-1">
-          <button onClick={decrease}>
+          <button onClick={decrease} className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors">
             <FaMinus size={10} />
           </button>
 
           <span className="px-4">{displayQty}</span>
 
-          <button onClick={increase}>
+          <button onClick={increase} className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors">
             <FaPlus size={10} />
           </button>
         </div>

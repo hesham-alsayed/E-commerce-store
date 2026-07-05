@@ -37,7 +37,7 @@ export default function DeleteAccountCard() {
         </CardContent>
       </Card>
 
-      {/* MODAL */}
+      {}
       {open && (
         <div
           className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"

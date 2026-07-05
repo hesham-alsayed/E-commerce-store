@@ -32,7 +32,7 @@ export default function CancelOrder() {
           router.replace("/order-cancelled");
         }, 1200);
       } catch (err) {
-        toast.error(err?.response?.data?.message || "Cancel failed");
+        toast.error(err?.message || err || "Cancel failed");
 
         setTimeout(() => {
           router.replace("/checkout");

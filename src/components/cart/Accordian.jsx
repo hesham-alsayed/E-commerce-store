@@ -7,7 +7,7 @@ export default function Accordion({ title, icon: Icon, children, bgColor }) {
   return (
     <div className="border border-gray-300 rounded mb-2 bg-white hover:border-gray-500">
       
-      {/* Header */}
+      {}
     <button
         onClick={() => setOpen(!open)}
         className={`w-full ${bgColor ? bgColor : ""} ${
@@ -26,7 +26,7 @@ export default function Accordion({ title, icon: Icon, children, bgColor }) {
         />
       </button>
 
-      {/* Content */}
+      {}
       <div
         className={`overflow-hidden transition-all duration-500 ${
           open ? "max-h-125 opacity-100" : "max-h-0 opacity-0"

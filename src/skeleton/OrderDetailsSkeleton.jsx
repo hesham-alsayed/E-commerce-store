@@ -6,7 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 export default function OrderDetailsSkeleton() {
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
-      {/* Header */}
+      {}
       <div className="bg-white rounded-2xl shadow p-6">
         <Skeleton height={30} width={200} />
         <div className="mt-4 flex flex-wrap gap-4">
@@ -16,9 +16,9 @@ export default function OrderDetailsSkeleton() {
         </div>
       </div>
 
-      {/* Content */}
+      {}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        {/* LEFT - Items */}
+        {}
         <div className="lg:col-span-2 space-y-4">
           {[1, 2, 3].map((item) => (
             <div
@@ -36,9 +36,9 @@ export default function OrderDetailsSkeleton() {
           ))}
         </div>
 
-        {/* RIGHT */}
+        {}
         <div className="space-y-6">
-          {/* Payment Summary */}
+          {}
           <div className="bg-white rounded-2xl shadow p-6 space-y-3">
             <Skeleton height={25} width={150} />
             <Skeleton height={15} width="100%" />
@@ -47,7 +47,7 @@ export default function OrderDetailsSkeleton() {
             <Skeleton height={30} width="100%" />
           </div>
 
-          {/* Customer Info */}
+          {}
           <div className="bg-white rounded-2xl shadow p-6 space-y-3">
             <Skeleton height={25} width={150} />
             <Skeleton height={15} width="70%" />

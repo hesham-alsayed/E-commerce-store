@@ -19,7 +19,6 @@ export default function PriceFilter({
   const min = Number(priceMin || 0);
   const max = Number(priceMax || maxRange);
 
-  // ================= CLOSE OUTSIDE =================
   useEffect(() => {
     const handler = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -31,7 +30,6 @@ export default function PriceFilter({
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // ================= SLIDER CHANGE =================
   const handleSliderChange = (e, value) => {
     setFilter("priceMin", value[0]);
     setFilter("priceMax", value[1]);
@@ -39,7 +37,7 @@ export default function PriceFilter({
 
   return (
     <div className="mt-2 relative" ref={dropdownRef}>
-      {/* BUTTON */}
+      {}
       <Button
         variant="outline"
         className="w-full justify-between"
@@ -48,7 +46,7 @@ export default function PriceFilter({
         Price
       </Button>
 
-      {/* DROPDOWN */}
+      {}
       <AnimatePresence>
         {open && (
           <m.div
@@ -58,7 +56,7 @@ export default function PriceFilter({
             transition={{ duration: 0.25 }}
             className="mt-2 space-y-3"
           >
-            {/* SLIDER */}
+            {}
             <Box sx={{ px: 1 }}>
               <Slider
                 value={[min, max]}
@@ -75,7 +73,7 @@ export default function PriceFilter({
               />
             </Box>
 
-            {/* INPUTS */}
+            {}
             <div className="flex gap-3">
               <input
                 type="number"

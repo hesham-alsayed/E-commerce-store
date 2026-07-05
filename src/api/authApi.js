@@ -1,131 +1,55 @@
+import { apiFetch } from ".";
 
-
-import { api } from ".";
-
-// Login
 export const login = async (data) => {
-  try {
-    const res = await api.post("/authentication/auth-login", data, {
-      withCredentials: true,
-    });
-    console.log("Login cookies set:", document.cookie);
-    return res.data;
-  } catch (error) {
-    console.log(error);
-
-    throw error;
-  }
+  const res = await apiFetch({ path: "/authentication/auth-login", method: "POST", body: JSON.stringify(data) });
+  return res.data;
 };
 
-// getMe - Session Check
 export const getMe = async () => {
-  try {
-    const res = await api.get("/users/me", {
-      withCredentials: true,
-    });
-    return res.data;
-  } catch (error) {
-    if (error.response?.status === 401) {
-      console.log("No session");
-    }
-    throw error;
-  }
+  const res = await apiFetch({ path: "/users/me", method: "GET" });
+  return res.data;
 };
 
-// Logout - Clear Session
 export const logout = async () => {
-  try {
-    await api.post(
-      "/authentication/logout",
-      {},
-      {
-        withCredentials: true,
-      },
-    );
-    console.log("Session cleared");
-  } catch (error) {
-    console.error("Logout error:", error);
-  }
+  await apiFetch({ path: "/authentication/logout", method: "POST", body: "{}" });
 };
 
 export const signup = async (data) => {
-  try {
-    const res = await api.post("/authentication/auth-signup", data);
-    return res.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const res = await apiFetch({ path: "/authentication/auth-signup", method: "POST", body: JSON.stringify(data) });
+  return res.data;
 };
 
-
 export const verifyEmailCode = async (email, code) => {
-  try {
-    const data = {
-      email,
-      code,
-    };
-    const res = await api.post("/authentication/auth-verify-email-code", data);
-    return res;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const res = await apiFetch({ path: "/authentication/auth-verify-email-code", method: "POST", body: JSON.stringify({ email, code }) });
+  return res.data;
 };
 
 export const reSendEmailCode = async (email) => {
-  try {
-    const res = await api.post("/authentication/auth-send-email-code", {
-      email,
-    });
-    return res;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  const res = await apiFetch({ path: "/authentication/auth-send-email-code", method: "POST", body: JSON.stringify({ email }) });
+  return res.data;
 };
 
 export const changePassword = async (data) => {
-  const res = await api.patch("/authentication/auth-update-password", data);
+  const res = await apiFetch({ path: "/authentication/auth-update-password", method: "PATCH", body: JSON.stringify(data) });
   return res.data;
 };
 
-
-// UPDATE PROFILE TEXT ONLY
 export const updateMe = async (data) => {
-  const res = await api.patch(`/users/update-me`, data);
+  const res = await apiFetch({ path: "/users/update-me", method: "PATCH", body: JSON.stringify(data) });
   return res.data;
 };
 
-// UPDATE AVATAR
 export const updateAvatar = async (formData) => {
-  const { data } = await api.patch("/users/me", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-
-  return data;
+  const res = await apiFetch({ path: "/users/me", method: "PATCH", body: formData });
+  return res.data;
 };
-
-
 
 export const forgotPassword = async (email) => {
-  const res = await api.post(`/authentication/forgot-password`, {
-    email,
-  });
-
+  const res = await apiFetch({ path: "/authentication/forgot-password", method: "POST", body: JSON.stringify({ email }) });
   return res.data;
 };
 
-//  RESET PASSWORD (with token from email URL)
 export const resetPassword = async (token, password, passwordConfirm) => {
-  console.log(token);
-
-  const res = await api.patch(`/authentication/reset-password/${token}`, {
-    password,
-    passwordConfirm,
-  });
-
+  const res = await apiFetch({ path: `/authentication/reset-password/${token}`, method: "PATCH", body: JSON.stringify({ password, passwordConfirm }) });
   return res.data;
 };

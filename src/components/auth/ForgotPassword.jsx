@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import LoaderSpinnerButton from "@/components/LoaderSpinnerButton";
 import { Mail, ShieldCheck, KeyRound } from "lucide-react";
+import { toast } from "sonner";
 import { forgotPassword } from "@/api/authApi";
 
 export default function ForgotPassword() {
@@ -32,7 +33,7 @@ export default function ForgotPassword() {
 
       setTimer(60);
     } catch (err) {
-      console.log(err);
+      toast.error(err?.message || err || "Failed to send reset email");
     } finally {
       setLoading(false);
     }
@@ -59,7 +60,7 @@ export default function ForgotPassword() {
       setTimer(60);
       setSuccess(true);
     } catch (err) {
-      console.log(err);
+      toast.error(err?.message || err || "Failed to resend email");
     } finally {
       setLoading(false);
     }

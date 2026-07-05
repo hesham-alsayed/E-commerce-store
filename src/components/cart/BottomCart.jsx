@@ -7,7 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useSelector } from "react-redux";
 
 export default function BottomCart({ setShopCartOpen }) {
-  const { cart } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
   const router = useRouter();
   const handleNavigate = () => {
     router.push("/checkout");

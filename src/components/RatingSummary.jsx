@@ -28,7 +28,7 @@ export default function RatingSummary({ reviewsStats }) {
         Customer Reviews
       </h2>
 
-      {/* AVERAGE */}
+      {}
       <div className="flex items-center justify-center gap-2 mb-2">
         {[1, 2, 3, 4, 5].map((i) => (
           <Star key={i} filled={i <= Math.round(average)} />
@@ -41,7 +41,7 @@ export default function RatingSummary({ reviewsStats }) {
         Based on {totalReviews} reviews
       </p>
 
-      {/* BARS */}
+      {}
       <div className="space-y-2">
         {ratings.map((r) => {
           const percentage =

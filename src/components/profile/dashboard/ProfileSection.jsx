@@ -53,7 +53,7 @@ export default function ProfileSection() {
       await dispatch(updateProfile(formData)).unwrap();
       toast.success("profile update success");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Error update my profile");
+      toast.error(error || "Error updating profile");
     } finally {
       setIsEditing(false);
     }
@@ -81,7 +81,7 @@ export default function ProfileSection() {
       setAvatarFile(null);
       toast.success("Upload Success");
     } catch (err) {
-      toast.error(err?.response?.data?.message || "Failed Upload");
+      toast.error(err || "Failed to upload");
     }
   };
 

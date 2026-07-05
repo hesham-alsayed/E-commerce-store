@@ -2,14 +2,12 @@
 
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-
-import Logo from "../../assets/logo kazary.webp";
+import LoaderSpinnerButton from "@/components/LoaderSpinnerButton";
 
 export default function OrderSummary({
   cart,
   shipping,
 
-  // coupon controlled from parent
   coupon,
   setCoupon,
   errorCoupon,
@@ -32,7 +30,6 @@ export default function OrderSummary({
   const finalShipping = isFreeShipping ? 0 : shippingPrice;
   const total = afterDiscount + finalShipping;
 
-  // ================= APPLY =================
   const handleApply = () => {
     if (!coupon?.trim()) {
       setErrorCoupon?.("Enter coupon code");
@@ -43,19 +40,18 @@ export default function OrderSummary({
     onApplyCoupon?.(coupon.trim());
   };
 
-  // ================= REMOVE =================
   const handleRemove = () => {
     onRemoveCoupon?.();
   };
 
   return (
     <div className="space-y-6">
-      {/* Logo */}
+      {}
       <div className="flex justify-center">
-        <img src={Logo} alt="logo" className="w-28 object-contain" />
+        <img src="/logo.webp" alt="logo" height={40} width={160} className="w-28 object-contain" />
       </div>
 
-      {/* ================= ITEMS ================= */}
+      {}
       {items.map((item) => (
         <div key={item._id} className="flex items-start justify-between gap-4">
           <div className="relative flex gap-4">
@@ -83,7 +79,7 @@ export default function OrderSummary({
         </div>
       ))}
 
-      {/* ================= COUPON ================= */}
+      {}
       <div className="space-y-2">
         {cart?.coupon ? (
           <div className="flex justify-between items-center p-2 border rounded bg-green-50">
@@ -98,9 +94,9 @@ export default function OrderSummary({
               type="button"
               onClick={handleRemove}
               disabled={loadingRemoveCoupon}
-              className="text-xs text-red-600 hover:underline"
+              className="text-xs text-red-600 hover:underline w-14 flex items-center justify-center"
             >
-              {loadingRemoveCoupon ? "..." : "Remove"}
+              {loadingRemoveCoupon ? <LoaderSpinnerButton color="red" /> : "Remove"}
             </button>
           </div>
         ) : (
@@ -118,9 +114,9 @@ export default function OrderSummary({
               type="button"
               onClick={handleApply}
               disabled={loadingCoupon}
-              className="bg-muted border hover:cursor-pointer hover:bg-gray-100 rounded-md px-4  transition"
+              className="bg-muted border hover:cursor-pointer hover:bg-gray-100 rounded-md px-4 transition w-20 flex items-center justify-center"
             >
-              {loadingCoupon ? "..." : "Apply"}
+              {loadingCoupon ? <LoaderSpinnerButton color="black" /> : "Apply"}
             </button>
           </div>
         )}
@@ -128,7 +124,7 @@ export default function OrderSummary({
         {errorCoupon && <p className="text-xs text-red-500">{errorCoupon}</p>}
       </div>
 
-      {/* ================= PRICES ================= */}
+      {}
       <div className="space-y-4">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>

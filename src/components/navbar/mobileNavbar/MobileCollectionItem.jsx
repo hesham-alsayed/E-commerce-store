@@ -8,7 +8,7 @@ export default function MobileCollectionItem({
   setMobileCollection,
   setMobileCategory,
 }) {
-  const isOpen = mobileCollection === collection.id; // ✅ ID
+  const isOpen = mobileCollection === collection.id; 
 
   return (
     <li>
@@ -21,12 +21,12 @@ export default function MobileCollectionItem({
             setMobileCollection(null);
             setMobileCategory(null);
           } else {
-            setMobileCollection(collection.id); // ✅ ID
+            setMobileCollection(collection.id); 
             setMobileCategory(null);
           }
         }}
       >
-        {collection.slug.toUpperCase()} {/* UI ONLY */}
+        {collection.slug.toUpperCase()} {}
         {collection.categories?.length > 0 && (
           <AiOutlineRight
             className={`transition-transform duration-300 ${
@@ -45,9 +45,9 @@ export default function MobileCollectionItem({
       >
         {collection.categories?.map((category) => (
           <MobileCategoryItem
-            key={category.id} // ✅ FIX
+            key={category.id} 
             category={category}
-            collectionId={collection.id} // ✅ pass ID
+            collectionId={collection.id} 
             mobileCategory={mobileCategory}
             setMobileCategory={setMobileCategory}
           />

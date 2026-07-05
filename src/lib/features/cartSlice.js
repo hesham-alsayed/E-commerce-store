@@ -13,12 +13,14 @@ const calculateTotalPrice = (items = []) => {
   return items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 };
 
+const DEFAULT_CART = { items: [], totalPrice: 0, coupon: null, discountAmount: 0, totalPriceAfterDiscount: 0, freeShipping: null };
+
 const getLocalCart = () => {
   if (typeof window === "undefined") {
-    return { items: [], totalPrice: 0 };
+    return { ...DEFAULT_CART };
   }
   return (
-    JSON.parse(localStorage.getItem("cart")) || { items: [], totalPrice: 0 }
+    JSON.parse(localStorage.getItem("cart")) || { ...DEFAULT_CART }
   );
 };
 
@@ -26,9 +28,22 @@ const setLocalCart = (cart) => {
   localStorage.setItem("cart", JSON.stringify(cart));
 };
 
-export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
-  const data = await getCartApi();
-  return data?.cart || { items: [], totalPrice: 0 };
+const mergeCart = (target, source) => {
+  target.items = source.items || [];
+  target.totalPrice = source.totalPrice || 0;
+  target.coupon = source.coupon || null;
+  target.discountAmount = source.discountAmount || 0;
+  target.totalPriceAfterDiscount = source.totalPriceAfterDiscount || target.totalPrice;
+  target.freeShipping = source.freeShipping || null;
+};
+
+export const fetchCart = createAsyncThunk("cart/fetchCart", async (_, { rejectWithValue }) => {
+  try {
+    const data = await getCartApi();
+    return data?.cart || { items: [], totalPrice: 0 };
+  } catch (err) {
+    return rejectWithValue(err?.message || err || "Failed to fetch cart");
+  }
 });
 
 export const addToCart = createAsyncThunk(
@@ -95,23 +110,26 @@ export const addToCart = createAsyncThunk(
       return { cart: updated, fromLocal: true };
     }
 
-    await addToCartApi({
-      productId: product._id,
-      title: product.title,
-      price: price || product.price,
-      color,
-      size,
-      quantity,
-    });
-
-    const data = await getCartApi();
-    return { cart: data?.cart || { items: [], totalPrice: 0 } };
+    try {
+      await addToCartApi({
+        productId: product._id,
+        title: product.title,
+        price: price || product.price,
+        color,
+        size,
+        quantity,
+      });
+      const data = await getCartApi();
+      return { cart: data?.cart || { items: [], totalPrice: 0 } };
+    } catch (err) {
+      return rejectWithValue(err?.message || err || "Failed to add to cart");
+    }
   },
 );
 
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
-  async (itemId, { getState }) => {
+  async (itemId, { getState, rejectWithValue }) => {
     const { auth } = getState();
 
     if (!auth.user) {
@@ -122,9 +140,13 @@ export const removeFromCart = createAsyncThunk(
       return { cart: updated, fromLocal: true };
     }
 
-    await removeCartItemApi(itemId);
-    const data = await getCartApi();
-    return { cart: data?.cart || { items: [], totalPrice: 0 } };
+    try {
+      await removeCartItemApi(itemId);
+      const data = await getCartApi();
+      return { cart: data?.cart || { items: [], totalPrice: 0 } };
+    } catch (err) {
+      return rejectWithValue(err?.message || err || "Failed to remove item");
+    }
   },
 );
 
@@ -162,8 +184,12 @@ export const updateQuantity = createAsyncThunk(
       return { cart: updated, fromLocal: true };
     }
 
-    const data = await updateCartItemApi(itemId, quantity);
-    return { cart: data?.cart || cart };
+    try {
+      const data = await updateCartItemApi(itemId, quantity);
+      return { cart: data?.cart || cart };
+    } catch (err) {
+      return rejectWithValue(err?.message || err || "Failed to update quantity");
+    }
   },
 );
 
@@ -188,14 +214,22 @@ export const clearCart = createAsyncThunk(
   },
 );
 
-export const applyCoupon = createAsyncThunk("cart/applyCoupon", async (code) => {
-  const data = await applyCouponApi(code);
-  return data.cart;
+export const applyCoupon = createAsyncThunk("cart/applyCoupon", async (code, { rejectWithValue }) => {
+  try {
+    const data = await applyCouponApi(code);
+    return data.cart;
+  } catch (err) {
+    return rejectWithValue(err?.message || err || "Failed to apply coupon");
+  }
 });
 
-export const removeCoupon = createAsyncThunk("cart/removeCoupon", async () => {
-  const data = await removeCouponApi();
-  return data.cart;
+export const removeCoupon = createAsyncThunk("cart/removeCoupon", async (_, { rejectWithValue }) => {
+  try {
+    const data = await removeCouponApi();
+    return data.cart;
+  } catch (err) {
+    return rejectWithValue(err?.message || err || "Failed to remove coupon");
+  }
 });
 
 const cartSlice = createSlice({
@@ -203,14 +237,19 @@ const cartSlice = createSlice({
   initialState: {
     items: [],
     totalPrice: 0,
+    coupon: null,
+    discountAmount: 0,
+    totalPriceAfterDiscount: 0,
+    freeShipping: null,
     loading: false,
     initialized: false,
+    _prevQty: {},
   },
   reducers: {
     setCartFromLocal(state) {
       const local = getLocalCart();
-      state.items = local.items;
-      state.totalPrice = local.totalPrice;
+      mergeCart(state, local);
+      state.initialized = true;
     },
   },
   extraReducers: (builder) => {
@@ -219,8 +258,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.totalPrice = action.payload.totalPrice;
+        mergeCart(state, action.payload);
         state.loading = false;
         state.initialized = true;
       })
@@ -232,10 +270,9 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        const { cart } = action.payload;
-        state.items = cart.items;
-        state.totalPrice = cart.totalPrice;
+        mergeCart(state, action.payload.cart);
         state.loading = false;
+        state.initialized = true;
       })
       .addCase(addToCart.rejected, (state) => {
         state.loading = false;
@@ -244,38 +281,58 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
-        const { cart } = action.payload;
-        state.items = cart.items;
-        state.totalPrice = cart.totalPrice;
+        mergeCart(state, action.payload.cart);
         state.loading = false;
+        state.initialized = true;
       })
       .addCase(removeFromCart.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(updateQuantity.pending, (state) => {
-        state.loading = true;
+      .addCase(updateQuantity.pending, (state, action) => {
+        const { itemId, quantity } = action.meta.arg;
+        const item = state.items.find((i) => i._id === itemId);
+        if (item) {
+          state._prevQty[itemId] = item.quantity;
+          item.quantity = quantity;
+          state.totalPrice = calculateTotalPrice(state.items);
+        }
       })
       .addCase(updateQuantity.fulfilled, (state, action) => {
+        const { itemId } = action.meta.arg;
+        delete state._prevQty[itemId];
         const { cart } = action.payload;
-        state.items = cart.items;
-        state.totalPrice = cart.totalPrice;
+        if (action.payload.fromLocal) {
+          state.items = cart.items;
+        }
+        state.totalPrice = cart.totalPrice || calculateTotalPrice(state.items);
+        state.coupon = cart.coupon || null;
+        state.discountAmount = cart.discountAmount || 0;
+        state.totalPriceAfterDiscount = cart.totalPriceAfterDiscount || state.totalPrice;
+        state.freeShipping = cart.freeShipping || null;
         state.loading = false;
+        state.initialized = true;
       })
-      .addCase(updateQuantity.rejected, (state) => {
-        state.loading = false;
+      .addCase(updateQuantity.rejected, (state, action) => {
+        const { itemId } = action.meta.arg;
+        const prevQty = state._prevQty[itemId];
+        const item = state.items.find((i) => i._id === itemId);
+        if (item && prevQty !== undefined) {
+          item.quantity = prevQty;
+          state.totalPrice = calculateTotalPrice(state.items);
+        }
+        delete state._prevQty[itemId];
       })
       .addCase(clearCart.fulfilled, (state, action) => {
-        const { cart } = action.payload;
-        state.items = cart.items;
-        state.totalPrice = cart.totalPrice;
+        mergeCart(state, action.payload.cart);
+        state.initialized = true;
       })
       .addCase(applyCoupon.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.totalPrice = action.payload.totalPrice;
+        mergeCart(state, action.payload);
+        state.initialized = true;
       })
       .addCase(removeCoupon.fulfilled, (state, action) => {
-        state.items = action.payload.items;
-        state.totalPrice = action.payload.totalPrice;
+        mergeCart(state, action.payload);
+        state.initialized = true;
       });
   },
 });

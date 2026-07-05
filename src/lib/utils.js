@@ -15,11 +15,11 @@ export const showToast = ({ message, type = "success" }) => {
   if (type === "success") {
     icon = React.createElement(AiOutlineCheck, {
       size: 20,
-      className: "text-white", // أيقونة بيضاء
+      className: "text-white", 
     });
     style = {
-      background: "#000", // خلفية سوداء
-      color: "#fff", // نص أبيض
+      background: "#000", 
+      color: "#fff", 
       borderRadius: "10px",
       padding: "12px 20px",
       fontWeight: "500",
@@ -27,11 +27,11 @@ export const showToast = ({ message, type = "success" }) => {
   } else if (type === "error") {
     icon = React.createElement(AiOutlineClose, {
       size: 20,
-      className: "text-white", // لازم تحدد لون الأيقونة
+      className: "text-white", 
     });
     style = {
-      background: "#b91c1c", // bg-red-800
-      color: "#fff", // نص أبيض
+      background: "#b91c1c", 
+      color: "#fff", 
       borderRadius: "10px",
       padding: "12px 20px",
       fontWeight: "500",
@@ -55,7 +55,6 @@ export const formatNavLinks = (navLinks = []) => {
     const collectionSlug = collection.slug;
     const categorySlug = category.slug;
 
-    // 🧠 create collection
     if (!collectionsMap[collectionSlug]) {
       collectionsMap[collectionSlug] = {
         id: collection._id || collection.id,
@@ -65,7 +64,6 @@ export const formatNavLinks = (navLinks = []) => {
       };
     }
 
-    // 🧠 create category
     if (!collectionsMap[collectionSlug].categories[categorySlug]) {
       collectionsMap[collectionSlug].categories[categorySlug] = {
         id: category._id || category.id,
@@ -75,7 +73,6 @@ export const formatNavLinks = (navLinks = []) => {
       };
     }
 
-    // 🧠 push subcategory with id
     collectionsMap[collectionSlug].categories[categorySlug].subcategories.push({
       id: item._id || item.id,
       name: item.name,
@@ -83,7 +80,6 @@ export const formatNavLinks = (navLinks = []) => {
     });
   });
 
-  // convert object -> array
   return Object.values(collectionsMap).map((col) => ({
     id: col.id,
     name: col.name,
@@ -160,17 +156,14 @@ export const statusStyle = (status) => {
 export const getSizeType = (size) => {
   const value = String(size).toLowerCase();
 
-  // Clothes sizes
   if (["xs", "s", "m", "l", "xl", "2xl", "3xl", "4xl"].includes(value)) {
     return "Clothes Size";
   }
 
-  // Coat sizes
   if (Number(value) >= 44 && Number(value) <= 70) {
     return "Blazer Size";
   }
 
-  // Trouser sizes
   if (Number(value) >= 28 && Number(value) <= 44) {
     return "Waist Size";
   }
@@ -210,10 +203,8 @@ export const groupSizesByType = (products = []) => {
 export const isLightColor = (color) => {
   if (!color) return false;
 
-  // Remove #
   const hex = color.replace("#", "");
 
-  // Convert short hex to full hex
   const fullHex =
     hex.length === 3
       ? hex
@@ -226,7 +217,6 @@ export const isLightColor = (color) => {
   const g = parseInt(fullHex.substring(2, 4), 16);
   const b = parseInt(fullHex.substring(4, 6), 16);
 
-  // Brightness formula
   const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
   return brightness > 180;

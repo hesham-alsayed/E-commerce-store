@@ -1,16 +1,17 @@
-"use client";
-
 import Link from "next/link";
-import logo from "@/assets/mc_logo-01_1879a4d6-eb9c-4fec-bd57-4961a0c344a6.avif";
 
-export default function Logo({height}) {
+export default function Logo({ height = 10, width }) {
+  const px = height * 4;
   return (
     <div>
-      <Link href="/" className="font-bold text-xl md:text-2xl">
+      <Link href="/">
         <img
-          src={logo}
+          src="/logo.avif"
           alt="logo"
-          className={`h-${height} object-contain`}
+          height={px}
+          width={width || "auto"}
+          style={{ height: px, width: width || "auto" }}
+          className="object-contain"
         />
       </Link>
     </div>

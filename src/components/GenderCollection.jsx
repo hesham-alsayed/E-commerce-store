@@ -5,7 +5,7 @@ import SummerCollection from "@/assets/pexels-loquellano-10084285.jpg";
 export default function GenderCollections() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 md:px-6 py-6 overflow-hidden">
-      {/* Men's Collection */}
+      {}
       <div className="relative overflow-hidden rounded-lg">
         <img
           src={MenCollections}
@@ -25,7 +25,7 @@ export default function GenderCollections() {
         </div>
       </div>
 
-      {/* Child Collection */}
+      {}
       <div className="relative overflow-hidden rounded-lg">
         <img
           src={ChildCollection}
@@ -45,7 +45,7 @@ export default function GenderCollections() {
         </div>
       </div>
 
-      {/* Summer Clearance */}
+      {}
       <div className="relative md:col-span-2 overflow-hidden rounded-lg">
         <img
           src={SummerCollection}

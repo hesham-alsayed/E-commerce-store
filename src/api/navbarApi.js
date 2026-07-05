@@ -1,12 +1,6 @@
-import { api } from ".";
+import { apiFetch } from ".";
 
 export const getNavLinks = async () => {
-  try {
-    const res = await api.get("/subcategories/nav-links");
-    return res.data;
-  } catch (error) {
-    console.error(error.response?.data || error.message);
-    return [];
-  }
+  const res = await apiFetch({ path: "/subcategories/nav-links", method: "GET" });
+  return res.data;
 };
-

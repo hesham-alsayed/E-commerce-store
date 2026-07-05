@@ -2,7 +2,9 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyOrders } from "@/lib/features/orderSlice";
+import { fetchUser } from "@/lib/features/authSlice";
 import { useEffect, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import CurrentRoute from "@/views/CurrentRoute";
 import ProfileSection from "@/components/profile/dashboard/ProfileSection";
 import SummaryCard from "@/components/profile/dashboard/SummaryCard";
@@ -11,10 +13,14 @@ import DashboardPageSkeleton from "@/skeleton/DashboardPageSkeleton";
 
 export default function DashboardPage() {
   const dispatch = useDispatch();
-  const { loading, orders } = useSelector((state) => state.order);
+  const router = useRouter();
+  const { loading, orders, error } = useSelector((state) => state.order);
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    dispatch(fetchUser()).unwrap().catch(() => {
+      router.replace("/auth?mode=login");
+    });
     dispatch(fetchMyOrders());
   }, [dispatch]);
 
@@ -44,6 +50,10 @@ export default function DashboardPage() {
   const stats = useMemo(() => {
     return calcOrderStats(orders || []);
   }, [orders]);
+
+  if (error) {
+    return <div className="text-center py-20 text-red-500 text-sm">{error}</div>;
+  }
 
   if (loading || !user) return <DashboardPageSkeleton />;
 

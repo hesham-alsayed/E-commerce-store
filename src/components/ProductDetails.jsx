@@ -197,8 +197,9 @@ export default function ProductDetails() {
             <div className="my-6 flex items-center gap-4">
               <div className="flex items-center border py-1 px-3 border-gray-300 rounded">
                 <button
+                  type="button"
                   onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  className="p-2 border border-gray-300 rounded hover:border-gray-400"
+                  className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors"
                 >
                   <FaMinus size={10} />
                 </button>
@@ -206,8 +207,9 @@ export default function ProductDetails() {
                 <span className="px-4 text-[12px] lg:text-sm">{quantity}</span>
 
                 <button
+                  type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 border border-gray-300 rounded hover:border-gray-400"
+                  className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors"
                 >
                   <FaPlus size={10} />
                 </button>

@@ -58,8 +58,7 @@ const ProductCard = ({ product }) => {
         await dispatch(addItemWishlist(product)).unwrap();
       }
     } catch (err) {
-      toast.error(err.response.data.message);
-      console.error(err);
+      toast.error(err || "Wishlist update failed");
     }
   };
 

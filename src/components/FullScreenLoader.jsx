@@ -9,10 +9,10 @@ export default function FullScreenLoader({ text = "Processing..." }) {
         transition={{ duration: 0.3 }}
         className="flex flex-col items-center gap-4"
       >
-        {/* SPINNER */}
+        {}
         <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin" />
 
-        {/* TEXT */}
+        {}
         <p className="text-sm text-gray-600 text-center">{text}</p>
       </_motion.div>
     </div>

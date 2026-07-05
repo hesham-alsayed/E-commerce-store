@@ -17,9 +17,9 @@ export default function MobileSubCategoryList({
       {subcategories.map((sub) => (
         <li key={sub.id}>
           {" "}
-          {/* ✅ FIX */}
+          {}
           <Link
-            href={`/collections/${collectionId}/${categoryId}/${sub.id}`} // ✅ ID ROUTE
+            href={`/collections/${collectionId}/${categoryId}/${sub.id}`} 
             className="block py-1 hover:underline"
           >
             {sub.slug.charAt(0).toUpperCase() + sub.slug.slice(1)}

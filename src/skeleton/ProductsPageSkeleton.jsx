@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 import ProductCardSkeleton from "./ProductCardSkeleton";
 
 export default function ProductsPageSkeleton({ columns = 4 }) {
-  const skeletonCount = columns * 2; // عدد مناسب للشاشة
+  const skeletonCount = columns * 2; 
 
   const gridClasses = {
     1: "grid-cols-1",
@@ -14,7 +14,7 @@ export default function ProductsPageSkeleton({ columns = 4 }) {
 
   return (
     <>
-      {/* Toolbar Skeleton */}
+      {}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-8 p-4">
         <div className="flex items-center gap-3">
           <Skeleton height={40} width={120} />
@@ -23,7 +23,7 @@ export default function ProductsPageSkeleton({ columns = 4 }) {
         <Skeleton height={40} width={150} />
       </div>
 
-      {/* Products Grid Skeleton */}
+      {}
       <div className={`grid ${gridClasses[columns]} gap-4`}>
         {Array.from({ length: skeletonCount }).map((_, i) => (
           <ProductCardSkeleton key={`skeleton-${i}`} />

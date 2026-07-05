@@ -18,7 +18,7 @@ export default function SecurityPage() {
       await dispatch(updateMyPassword(formData)).unwrap();
       toast.success("update password success");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Error Update Password");
+      toast.error(error || "Error updating password");
     } finally {
       setLoading(false);
     }
@@ -26,14 +26,14 @@ export default function SecurityPage() {
 
   return (
     <div className="mt-12 md:mt-4 px-4">
-      {/* ROUTE */}
+      {}
       <CurrentRoute />
 
       <h2 className="text-2xl font-bold mb-6">🔐 Security Settings</h2>
 
-      {/* ================= RESPONSIVE GRID ================= */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-        {/* PASSWORD */}
+        {}
         <div className="w-full">
           <PasswordSection
             handleUpdatePassword={handleUpdatePassword}
@@ -41,7 +41,7 @@ export default function SecurityPage() {
           />
         </div>
 
-        {/* DELETE ACCOUNT */}
+        {}
         <div className="w-full">
           <DeleteAccountCard />
         </div>

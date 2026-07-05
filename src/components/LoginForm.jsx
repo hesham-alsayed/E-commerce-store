@@ -16,11 +16,12 @@ import {
 
 import { Mail, Lock, Eye, EyeOff, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { showToast } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/lib/features/authSlice";
 import { fetchCart } from "@/lib/features/cartSlice";
+import { addToCartApi } from "@/api/cartApi";
 
 export function LoginForm({ onSignUpClick }) {
   const validateEmail = (value) => {
@@ -43,6 +44,8 @@ export function LoginForm({ onSignUpClick }) {
   const dispatch = useDispatch();
   const { actionLoading } = useSelector(state => state.auth);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from") || "/";
 
   const {
     register,
@@ -60,16 +63,28 @@ export function LoginForm({ onSignUpClick }) {
       const res = await dispatch(login(data)).unwrap();
 
       if (res) {
+        const localCart = JSON.parse(localStorage.getItem("cart"));
+        if (localCart?.items?.length) {
+          for (const item of localCart.items) {
+            await addToCartApi({
+              productId: item.productId,
+              title: item.title,
+              price: item.price,
+              color: item.color,
+              size: item.size,
+              quantity: item.quantity,
+            });
+          }
+        }
+
         await dispatch(fetchCart());
 
-        const redirectTo = "/checkout";
-
-        router.replace(redirectTo);
+        router.replace(from);
       }
 
       showToast({ message: "Login successfully", type: "success" });
     } catch (error) {
-      showToast({ message: error.response.data.message, type: "error" });
+      showToast({ message: error || "Login failed", type: "error" });
     }
   };
 

@@ -14,6 +14,7 @@ export default function AddressesPage() {
     addresses,
     user,
     loadingData,
+    error,
 
     form,
     editingId,
@@ -37,9 +38,12 @@ export default function AddressesPage() {
     emptyForm,
   } = useAddresses();
 
+  if (error) {
+    return <div className="text-center py-20 text-red-500 text-sm">{error}</div>;
+  }
+
   if (loadingData) return <AddressesPageSkeleton />;
 
-  // ================= SAFE NORMALIZATION (FIX) =================
   const safeAddresses = Array.isArray(addresses) ? addresses : [];
 
   const isEmpty = safeAddresses.length === 0;
@@ -48,7 +52,7 @@ export default function AddressesPage() {
     <div className="max-w-6xl mx-auto flex flex-col mt-10 space-y-6">
       <CurrentRoute />
 
-      {/* HEADER */}
+      {}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">My Addresses</h1>
@@ -65,7 +69,7 @@ export default function AddressesPage() {
         )}
       </div>
 
-      {/* MODAL */}
+      {}
       <AddressModal
         open={open}
         setOpen={setOpen}
@@ -78,25 +82,25 @@ export default function AddressesPage() {
         emptyForm={emptyForm}
       />
 
-      {/* CONTENT */}
+      {}
       {isEmpty ? (
-        /* ================= CENTERED EMPTY STATE ================= */
+        
         <div className="flex flex-1 items-center justify-center">
           <div className="text-center flex flex-col items-center max-w-md px-4">
-            {/* ICON */}
+            {}
             <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
               <Plus className="w-8 h-8 text-gray-400" />
             </div>
 
-            {/* TITLE */}
+            {}
             <h2 className="text-xl font-semibold">No addresses found</h2>
 
-            {/* DESCRIPTION */}
+            {}
             <p className="text-sm text-gray-500 mt-2">
               You haven't added any shipping addresses yet.
             </p>
 
-            {/* BUTTON */}
+            {}
             <Button onClick={handleOpen} className="mt-6 px-6">
               <Plus className="w-4 h-4 mr-2" />
               Add New Address
@@ -104,7 +108,7 @@ export default function AddressesPage() {
           </div>
         </div>
       ) : (
-        /* ================= LIST ================= */
+        
         <div className="grid md:grid-cols-2 gap-4">
           {safeAddresses.map((addr) => (
             <AddressCard
@@ -119,7 +123,7 @@ export default function AddressesPage() {
         </div>
       )}
 
-      {/* DELETE MODAL */}
+      {}
       <DeleteModal
         isLoadingDelete={loadingDelete}
         isOpen={openDelete}

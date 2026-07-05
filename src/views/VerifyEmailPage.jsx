@@ -31,7 +31,7 @@ export default function VerifyEmailPage() {
         setIsVerified(true);
       }
     } catch (err) {
-      setError(err?.response?.data?.message || "Invalid code");
+      setError(err?.message || err || "Invalid code");
     } finally {
       setIsVerifying(false);
     }
@@ -67,7 +67,7 @@ export default function VerifyEmailPage() {
       }, 1000);
     } catch (error) {
       console.error(error);
-      showToast({ message: error.response.data.message, type: "error" });
+      showToast({ message: error || "Verification failed", type: "error" });
     } finally {
       setIsResending(false);
     }

@@ -11,24 +11,20 @@ export default function ProductsToolbar({ columns, setColumns }) {
     const update = () => {
       const w = window.innerWidth;
 
-      // eslint-disable-next-line no-useless-assignment
       let newOptions = [];
-      // eslint-disable-next-line no-useless-assignment
+      
       let defaultValue = 2;
 
-      // 📱 0 → 400
       if (w < 400) {
         newOptions = [1];
         defaultValue = 1;
       }
 
-      // 📲 400 → 1024
       else if (w < 1024) {
         newOptions = [1, 2];
         defaultValue = 2;
       }
 
-      // 💻 1024+
       else {
         newOptions = [3, 4, 5];
         defaultValue = 3;

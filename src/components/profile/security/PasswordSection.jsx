@@ -40,7 +40,7 @@ export default function PasswordSection({ handleUpdatePassword, loading }) {
 
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Current Password */}
+          {}
           <div>
             <PasswordField
               label="Current Password"
@@ -62,7 +62,7 @@ export default function PasswordSection({ handleUpdatePassword, loading }) {
             )}
           </div>
 
-          {/* New Password */}
+          {}
           <div>
             <PasswordField
               label="New Password"
@@ -96,7 +96,7 @@ export default function PasswordSection({ handleUpdatePassword, loading }) {
             )}
           </div>
 
-          {/* Confirm Password */}
+          {}
           <div>
             <PasswordField
               label="Confirm Password"

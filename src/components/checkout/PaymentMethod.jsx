@@ -19,7 +19,7 @@ export default function PaymentMethod({
     <div className="space-y-4">
       <h2 className="text-xl font-semibold">Payment Method</h2>
 
-      {/* hidden input for RHF */}
+      {}
       <input
         type="hidden"
         {...register("paymentMethod", {
@@ -32,7 +32,7 @@ export default function PaymentMethod({
         onValueChange={handleChange}
         className="border rounded-lg overflow-hidden"
       >
-        {/* PAYPAL */}
+        {}
         <div
           className={`flex items-center gap-3 px-4 py-3 cursor-pointer ${
             watchValue === "paypal" ? "bg-muted" : ""
@@ -46,7 +46,7 @@ export default function PaymentMethod({
 
         <div className="border-t" />
 
-        {/* CASH */}
+        {}
         <div
           className={`flex items-center gap-3 px-4 py-3 cursor-pointer ${
             watchValue === "cash" ? "bg-muted" : ""

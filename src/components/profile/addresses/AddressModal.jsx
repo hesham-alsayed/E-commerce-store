@@ -1,6 +1,5 @@
 "use client";
 
-
 import {
   Dialog,
   DialogContent,
@@ -25,18 +24,18 @@ export default function AddressModal({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[520px]">
-        {/* ANIMATION */}
+        {}
         <div>
-          {/* HEADER */}
+          {}
           <DialogHeader>
             <DialogTitle>
               {editingId ? "Update Address" : "Add Address"}
             </DialogTitle>
           </DialogHeader>
 
-          {/* FORM */}
+          {}
           <div className="space-y-3 mt-5">
-            {/* COUNTRY */}
+            {}
             <div className="relative">
               <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
@@ -48,7 +47,7 @@ export default function AddressModal({
               />
             </div>
 
-            {/* GOVERNORATE */}
+            {}
             <div className="relative">
               <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
@@ -60,7 +59,7 @@ export default function AddressModal({
               />
             </div>
 
-            {/* CITY */}
+            {}
             <div className="relative">
               <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
@@ -72,7 +71,7 @@ export default function AddressModal({
               />
             </div>
 
-            {/* STREET */}
+            {}
             <div className="relative">
               <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
@@ -84,7 +83,7 @@ export default function AddressModal({
               />
             </div>
 
-            {/* POSTAL CODE */}
+            {}
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
@@ -97,7 +96,7 @@ export default function AddressModal({
             </div>
           </div>
 
-          {/* ACTIONS */}
+          {}
           <div className="flex justify-end gap-2 mt-6">
             <Button variant="outline" onClick={() => setOpen(false)}>
               Cancel

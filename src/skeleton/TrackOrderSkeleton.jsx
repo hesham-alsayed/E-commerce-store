@@ -5,17 +5,17 @@ export default function TrackOrderSkeleton() {
   return (
     <div className="max-w-4xl mx-auto px-4 -mt-8 pb-10 space-y-4">
 
-      {/* HERO CARD */}
+      {}
       <div className="bg-white rounded-xl p-4 shadow-sm">
         <Skeleton height={20} width={200} />
         <Skeleton height={14} width={300} className="mt-2" />
       </div>
 
-      {/* TRACKING CARD */}
+      {}
       <div className="bg-white rounded-xl p-4 shadow-sm space-y-4">
         <Skeleton height={20} width={180} />
 
-        {/* steps */}
+        {}
         <div className="space-y-4">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="flex items-center gap-3">
@@ -29,7 +29,7 @@ export default function TrackOrderSkeleton() {
         </div>
       </div>
 
-      {/* SUMMARY CARD */}
+      {}
       <div className="bg-white rounded-xl p-4 shadow-sm">
         <Skeleton height={18} width={150} className="mb-3" />
 

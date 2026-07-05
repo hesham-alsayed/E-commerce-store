@@ -9,6 +9,7 @@ import { DeleteModal } from "@/modal/DeleteModal";
 import UpdateReviewModal from "@/modal/UpdateReviewModal";
 import ReviewsPageSkeleton from "@/skeleton/ReviewPageSkeleton";
 import EmptyReviews from "@/components/EmptyReviews";
+import { toast } from "sonner";
 
 export default function ReviewsPage() {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ export default function ReviewsPage() {
     reviews,
     actionLoading,
     loading,
+    error,
   } = useSelector((state) => state.reviews);
 
   const [openDelete, setOpenDelete] = useState(false);
@@ -27,7 +29,7 @@ export default function ReviewsPage() {
   useEffect(() => {
     dispatch(getMyReviews());
   }, [dispatch]);
-  // ================= EDIT =================
+  
   const onClickEdit = (review) => {
     setReviewEdit(review);
     setOpenEdit(true);
@@ -35,7 +37,6 @@ export default function ReviewsPage() {
 
   console.log(reviews);
 
-  // ================= DELETE =================
   const onClickDelete = (review) => {
     setReviewDelete(review);
     setOpenDelete(true);
@@ -50,10 +51,17 @@ export default function ReviewsPage() {
     }
   };
 
-  // ================= UPDATE =================
   const handleUpdate = async (id, data) => {
-    await dispatch(updateReview({ id, data })).unwrap();
+    try {
+      await dispatch(updateReview({ id, data })).unwrap();
+    } catch (err) {
+      toast.error(err || "Failed to update review");
+    }
   };
+
+  if (error) {
+    return <div className="text-center py-20 text-red-500 text-sm">{error}</div>;
+  }
 
   if (loading) return <ReviewsPageSkeleton />;
   return (
@@ -83,7 +91,7 @@ export default function ReviewsPage() {
         </div>
       )}
 
-      {/* DELETE MODAL */}
+      {}
       <DeleteModal
         isLoadingDelete={actionLoading}
         isOpen={openDelete}
@@ -93,7 +101,7 @@ export default function ReviewsPage() {
         onConfirm={handleDelete}
       />
 
-      {/* UPDATE MODAL */}
+      {}
       <UpdateReviewModal
         open={openEdit}
         onClose={() => setOpenEdit(false)}

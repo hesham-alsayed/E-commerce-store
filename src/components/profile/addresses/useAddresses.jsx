@@ -15,7 +15,8 @@ const emptyForm = {
 
 export default function useAddresses() {
   const dispatch = useDispatch();
-  const { addresses, loading: loadingData, user } = useSelector(state => state.user);
+  const { addresses, loading: loadingData, error } = useSelector(state => state.user);
+  const { user } = useSelector(state => state.auth);
 
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
@@ -56,7 +57,7 @@ export default function useAddresses() {
       setForm(emptyForm);
       setEditingId(null);
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong");
+      toast.error(error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -80,6 +81,16 @@ export default function useAddresses() {
     setOpenDelete(true);
   };
 
+  const setDefaultAddress = async (id) => {
+    try {
+      await dispatch(updateExistingAddress({ id, data: { isDefault: true } })).unwrap();
+      dispatch(fetchAddresses());
+      toast.success("Default address updated");
+    } catch (err) {
+      toast.error(err || "Failed to set default address");
+    }
+  };
+
   const handleDelete = async () => {
     try {
       setLoadingDelete(true);
@@ -89,7 +100,7 @@ export default function useAddresses() {
       setOpenDelete(false);
       setSelectedDelete(null);
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Delete failed");
+      toast.error(error || "Delete failed");
     } finally {
       setLoadingDelete(false);
     }
@@ -101,6 +112,7 @@ export default function useAddresses() {
     addresses,
     user,
     loadingData,
+    error,
 
     form,
     editingId,
@@ -122,5 +134,6 @@ export default function useAddresses() {
     loading,
     setForm,
     emptyForm,
+    setDefaultAddress,
   };
 }

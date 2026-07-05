@@ -12,7 +12,7 @@ import CurrentRoute from "@/views/CurrentRoute";
 export default function UserOrdersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
-  const { orders, loading } = useSelector((state) => state.order);
+  const { orders, loading, error } = useSelector((state) => state.order);
 
   useEffect(() => {
     dispatch(fetchMyOrders());
@@ -24,7 +24,9 @@ export default function UserOrdersPage() {
 
   return (
     <div className="p-4">
-      {loading ? (
+      {error ? (
+        <div className="text-center py-20 text-red-500 text-sm">{error}</div>
+      ) : loading ? (
         <UserOrdersPageSkeleton />
       ) : orders.length === 0 ? (
         <UserEmptyOrders />

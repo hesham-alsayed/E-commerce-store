@@ -11,7 +11,7 @@ import {
 export default function SortAndLimit({ searchParams, setFilter }) {
   return (
     <div className="flex gap-3">
-      {/* SORT */}
+      {}
       <Select 
     
         value={searchParams.get("sort") || "-createdAt"}
@@ -28,7 +28,7 @@ export default function SortAndLimit({ searchParams, setFilter }) {
         </SelectContent>
       </Select>
 
-      {/* LIMIT */}
+      {}
       <Select
         value={searchParams.get("limit") || "12"}
         onValueChange={(v) => setFilter("limit", v, { fetch: true })}

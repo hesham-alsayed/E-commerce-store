@@ -21,7 +21,6 @@ export default function UpdateReviewModal({
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  // ✅ FIXED
   useEffect(() => {
     const check = () => {
       if (review) {
@@ -48,7 +47,7 @@ export default function UpdateReviewModal({
           <DialogTitle>Update Review</DialogTitle>
         </DialogHeader>
 
-        {/* PRODUCT */}
+        {}
         <div className="flex gap-4 ">
           <img
             src={product?.variants[0]?.images[0]}
@@ -63,7 +62,7 @@ export default function UpdateReviewModal({
           </div>
         </div>
 
-        {/* STARS */}
+        {}
         <div className="flex gap-1 mt-3">
           {[1, 2, 3, 4, 5].map((num) => (
             <button key={num} type="button" onClick={() => setRating(num)}>
@@ -76,14 +75,14 @@ export default function UpdateReviewModal({
           ))}
         </div>
 
-        {/* COMMENT */}
+        {}
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           className="mt-3 p-2 resize-none max-h-20 min-h-15 w-full border focus:outline-none focus-visible:ring-0"
         />
 
-        {/* ACTIONS */}
+        {}
         <div className="flex justify-end gap-2 mt-4">
           <Button variant="outline" onClick={onClose}>
             Cancel

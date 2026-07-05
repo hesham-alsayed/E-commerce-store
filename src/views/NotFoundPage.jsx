@@ -6,20 +6,20 @@ export default function NotFoundPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
       <div className="text-center max-w-md">
 
-        {/* BIG NUMBER */}
+        {}
         <h1 className="text-8xl font-extrabold text-black">404</h1>
 
-        {/* TITLE */}
+        {}
         <h2 className="mt-4 text-2xl font-semibold text-gray-800">
           Page not found
         </h2>
 
-        {/* DESCRIPTION */}
+        {}
         <p className="mt-2 text-gray-500 text-sm leading-relaxed">
           The page you are looking for doesn’t exist or has been moved.
         </p>
 
-        {/* BUTTONS */}
+        {}
         <div className="mt-6 flex items-center justify-center gap-3">
           
           <button
@@ -39,7 +39,7 @@ export default function NotFoundPage() {
           </Link>
         </div>
 
-        {/* SMALL HELP TEXT */}
+        {}
         <p className="mt-6 text-xs text-gray-400">
           If you think this is a mistake, check the URL or return to homepage.
         </p>

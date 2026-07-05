@@ -39,18 +39,18 @@ export default function WishlistPage() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-[70vh] flex flex-col">
-      {/* ================= EMPTY STATE ================= */}
+      {}
       {!hasData ? (
         <div className="flex flex-col items-center justify-center text-center py-20 px-6">
-          {/* ICON */}
+          {}
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
             <Heart className="w-7 h-7 text-gray-400" />
           </div>
 
-          {/* TEXT */}
+          {}
           <p className="text-gray-500 text-sm">No items found</p>
 
-          {/* SMALL HINT */}
+          {}
           <span className="text-xs text-gray-400 mt-2">
             Start adding items to your wishlist
           </span>
@@ -63,7 +63,7 @@ export default function WishlistPage() {
         </div>
       ) : (
         <>
-          {/* ================= LIST ================= */}
+          {}
           <div className="space-y-4 flex-1">
             {paginated.map((item) => (
               <WishlistItem
@@ -75,7 +75,7 @@ export default function WishlistPage() {
             ))}
           </div>
 
-          {/* ================= PAGINATION ================= */}
+          {}
           {totalPages > 1 && (
             <div className="mt-6">
               <WishlistPagination

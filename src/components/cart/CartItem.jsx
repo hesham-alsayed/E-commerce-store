@@ -26,8 +26,9 @@ export default function CartItem({ item, onIncrease, onDecrease }) {
 
         <div className="inline-flex w-max items-center mt-2 border py-1 px-3 border-gray-300 rounded">
           <button
+            type="button"
             onClick={() => onDecrease(item)}
-            className="p-2 border border-gray-300 rounded hover:border-gray-400"
+            className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors"
           >
             <FaMinus size={10} />
           </button>
@@ -35,8 +36,9 @@ export default function CartItem({ item, onIncrease, onDecrease }) {
           <span className="px-4 text-[12px] lg:text-sm">{item.quantity}</span>
 
           <button
+            type="button"
             onClick={() => onIncrease(item)}
-            className="p-2 border border-gray-300 rounded hover:border-gray-400"
+            className="p-2 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition-colors"
           >
             <FaPlus size={10} />
           </button>

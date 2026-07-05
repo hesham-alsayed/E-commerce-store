@@ -5,12 +5,12 @@ export default function OrderConfirmationSkeleton() {
   return (
     <div className="max-w-200 mx-auto my-10 p-6 bg-white rounded-lg shadow-md border border-gray-200">
 
-      {/* Logo */}
+      {}
       <div className="flex justify-center mb-6">
         <Skeleton width={120} height={40} />
       </div>
 
-      {/* Title */}
+      {}
       <Skeleton width={220} height={28} />
       <div className="mt-2">
         <Skeleton width={160} height={18} />
@@ -20,7 +20,7 @@ export default function OrderConfirmationSkeleton() {
         <Skeleton width={"100%"} height={14} count={2} />
       </div>
 
-      {/* Order Info Row */}
+      {}
       <div className="flex justify-between border-t border-b border-gray-200 py-4 my-6 gap-4">
         {Array(4)
           .fill(0)
@@ -32,7 +32,7 @@ export default function OrderConfirmationSkeleton() {
           ))}
       </div>
 
-      {/* Items */}
+      {}
       <div className="space-y-4 mb-6">
         {Array(2)
           .fill(0)
@@ -53,7 +53,7 @@ export default function OrderConfirmationSkeleton() {
           ))}
       </div>
 
-      {/* Summary */}
+      {}
       <div className="space-y-3 mb-6">
         <div className="flex justify-between">
           <Skeleton width={80} />
@@ -71,13 +71,13 @@ export default function OrderConfirmationSkeleton() {
         </div>
       </div>
 
-      {/* Total */}
+      {}
       <div className="flex justify-between border-t pt-4">
         <Skeleton width={100} height={18} />
         <Skeleton width={80} height={18} />
       </div>
 
-      {/* Footer text */}
+      {}
       <div className="mt-6 space-y-2">
         <Skeleton width={"100%"} height={12} count={2} />
         <Skeleton width={180} height={14} />

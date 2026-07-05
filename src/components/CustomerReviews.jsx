@@ -65,14 +65,18 @@ export default function CustomerReviews({
       comment,
     };
 
-    if (isEdit) {
-      await dispatch(updateReview({ id: editId, data: payload })).unwrap();
-    } else {
-      await dispatch(createReview(payload)).unwrap();
-    }
+    try {
+      if (isEdit) {
+        await dispatch(updateReview({ id: editId, data: payload })).unwrap();
+      } else {
+        await dispatch(createReview(payload)).unwrap();
+      }
 
-    dispatch(fetchProductById(id));
-    setShowReviewModal(false);
+      dispatch(fetchProductById(id));
+      setShowReviewModal(false);
+    } catch (err) {
+      toast.error(err || "Failed to save review");
+    }
   };
 
   const handleDeleteReview = async () => {
@@ -81,7 +85,7 @@ export default function CustomerReviews({
       await dispatch(deleteReview(deletedId)).unwrap();
       await dispatch(fetchProductById(id));
     } catch (error) {
-      toast.error(error.response.data.message || "Error Delete Review");
+      toast.error(error || "Error deleting review");
     } finally {
       setLoadingDelete(false);
       setOpenDeleteModal(false);

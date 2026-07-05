@@ -7,7 +7,7 @@ export default function MobileCategoryItem({
   mobileCategory,
   setMobileCategory,
 }) {
-  const isOpen = mobileCategory === category.id; // ✅ ID
+  const isOpen = mobileCategory === category.id; 
 
   return (
     <li>
@@ -35,7 +35,7 @@ export default function MobileCategoryItem({
           subcategories={category.subcategories}
           isOpen={isOpen}
           collectionId={collectionId}
-          categoryId={category.id} // ✅ FIX
+          categoryId={category.id} 
         />
       )}
     </li>

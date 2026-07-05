@@ -11,7 +11,7 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center gap-3 px-2 py-1 text-xs sm:px-3 sm:py-2 sm:text-sm ">
-      {/* Prev */}
+      {}
       <button
         onClick={() => goTo(currentPage - 1)}
         disabled={currentPage <= 1}
@@ -20,12 +20,12 @@ export default function Pagination({
         Prev
       </button>
 
-      {/* Info */}
+      {}
       <span className="text-sm text-gray-600">
         Page {currentPage} of {totalPages}
       </span>
 
-      {/* Next */}
+      {}
       <button
         onClick={() => goTo(currentPage + 1)}
         disabled={currentPage >= totalPages}

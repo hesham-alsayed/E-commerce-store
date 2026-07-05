@@ -17,7 +17,7 @@ export function ClearCartModal({ isOpen, onClose, onConfirm, loading }) {
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-md p-0 overflow-hidden rounded-2xl bg-white">
-        {/* ✅ REQUIRED FOR ACCESSIBILITY */}
+        {}
         <DialogHeader className="p-5 border-b">
           <div className="flex items-start gap-3">
             <div className="p-2 rounded-lg bg-red-50 border border-red-200">
@@ -37,13 +37,13 @@ export function ClearCartModal({ isOpen, onClose, onConfirm, loading }) {
           </div>
         </DialogHeader>
 
-        {/* BODY */}
+        {}
         <div className="p-5">
           <p className="text-sm text-gray-600">
             Are you sure you want to clear your cart?
           </p>
 
-          {/* FOOTER */}
+          {}
           <div className="flex justify-end gap-3 pt-5 border-t mt-5">
             <Button
               type="button"

@@ -60,7 +60,7 @@ export default function ReviewModal({
             {isEdit ? "Update Review" : "Write a Review"}
           </h3>
 
-          {/* STARS */}
+          {}
           <div className="flex justify-center gap-2">
             {[1, 2, 3, 4, 5].map((i) => (
               <Star
@@ -71,7 +71,7 @@ export default function ReviewModal({
             ))}
           </div>
 
-          {/* COMMENT */}
+          {}
           <label className="text-sm">Review:</label>
           <textarea
             value={comment}
@@ -80,7 +80,7 @@ export default function ReviewModal({
             className="w-full max-h-20 min-h-15 border p-2 rounded h-28 mt-2"
           />
 
-          {/* SUBMIT */}
+          {}
           <button
             onClick={handleSubmit}
             disabled={loading}

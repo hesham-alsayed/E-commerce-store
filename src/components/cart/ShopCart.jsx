@@ -16,13 +16,14 @@ import CartItemSkeleton from "@/skeleton/CartItemSkeleton";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { DeleteModal } from "@/modal/DeleteModal";
-import { api } from "@/api";
+import { apiFetch } from "@/api";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuantity, removeFromCart, applyCoupon, removeCoupon, fetchCart } from "@/lib/features/cartSlice";
 
 export default function ShopCart({ isOpen, setShopCartOpen }) {
   const dispatch = useDispatch();
-  const { cart, loading } = useSelector(state => state.cart);
+  const cart = useSelector(state => state.cart);
+  const { loading } = cart;
 
   const [coupon, setCoupon] = useState("");
   const [errorCoupon, setErrorCoupon] = useState("");
@@ -47,9 +48,9 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
   };
   const getGeneralSettings = async (key) => {
     try {
-      const res = await api.get(`/settings/key/${key}`);
-      console.log(res.data);
-      setSettings(res.data.setting);
+      const { data } = await apiFetch({ path: `/settings/key/${key}`, method: "GET" });
+      console.log(data);
+      setSettings(data?.data?.setting || data?.setting);
     } catch (error) {
       console.log(error);
     }
@@ -77,12 +78,16 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
     );
   }, [settings]);
   const increase = (item) => {
-    dispatch(updateQuantity({ id: item._id, quantity: item.quantity + 1 }));
+    dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity + 1 }))
+      .unwrap()
+      .catch((err) => toast.error(err || "Stock limit reached"));
   };
 
   const decrease = (item) => {
     if (item.quantity <= 1) return;
-    dispatch(updateQuantity({ id: item._id, quantity: item.quantity - 1 }));
+    dispatch(updateQuantity({ itemId: item._id, quantity: item.quantity - 1 }))
+      .unwrap()
+      .catch((err) => toast.error(err || "Error updating quantity"));
   };
 
   const handleApplyCoupon = async () => {
@@ -108,7 +113,7 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
 
       toast.success("Coupon applied");
     } catch (error) {
-      setErrorCoupon(error?.response?.data?.message || "Error applying coupon");
+      setErrorCoupon(error || "Error applying coupon");
     } finally {
       setLoadingCoupon(false);
     }
@@ -126,7 +131,7 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
       await dispatch(fetchCart());
       toast.success("coupon removed");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Error in Remove Coupon");
+      toast.error(error?.message || error || "Error in Remove Coupon");
     } finally {
       setLoadingRemove(false);
       setOpenDeleteModal(false);

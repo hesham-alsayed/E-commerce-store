@@ -5,7 +5,7 @@ import { createOrderApi, capturePaypalApi } from "@/api/order";
 import { toast } from "sonner";
 
 export default function PayPalButton({ formData, onSuccess, onError }) {
-  const CLIENT_ID = "YOUR_CLIENT_ID"; // حط بتاعك
+  const CLIENT_ID = "YOUR_CLIENT_ID"; 
 
   return (
     <PayPalScriptProvider options={{ "client-id": CLIENT_ID }}>
@@ -15,7 +15,7 @@ export default function PayPalButton({ formData, onSuccess, onError }) {
           shape: "rect",
           label: "paypal",
         }}
-        // ✅ IMPORTANT: create order from backend
+        
         createOrder={async () => {
           try {
             const data = await createOrderApi({
@@ -23,14 +23,13 @@ export default function PayPalButton({ formData, onSuccess, onError }) {
               paymentMethod: "paypal",
             });
 
-            // backend بيرجع order + paypalOrderId
             return data.order.paymentInfo.paypalOrderId;
           } catch (err) {
             onError(err);
             throw err;
           }
         }}
-        // ✅ بعد الدفع
+        
         onApprove={async (data) => {
           try {
             await capturePaypalApi(data.orderID);

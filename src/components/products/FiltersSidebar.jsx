@@ -32,7 +32,6 @@ export default function FiltersSidebar({
 }) {
   const { handleOverlayClick, overlayRef } = useModalBehavior(open, onClose);
 
-  // ================= QUERY =================
   const brand = searchParams.get("brand") || "all";
   const material = searchParams.get("material") || "all";
   const stock = searchParams.get("stock") || "";
@@ -42,7 +41,6 @@ export default function FiltersSidebar({
   const priceMin = Number(searchParams.get("priceMin") || 0);
   const priceMax = Number(searchParams.get("priceMax") || 5000);
 
-  // ================= TOGGLE =================
   const toggleSize = (size) => {
     const value = String(size);
 
@@ -57,14 +55,13 @@ export default function FiltersSidebar({
     setFilter("stock", checked ? "in" : "");
   };
 
-  // ================= GROUP SIZES =================
   const groupedSizes = groupSizesByType(products);
 
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* BACKDROP */}
+          {}
           <m.div
             className="fixed inset-0 bg-black/50 z-50"
             onClick={handleOverlayClick}
@@ -74,14 +71,14 @@ export default function FiltersSidebar({
             exit={{ opacity: 0 }}
           />
 
-          {/* SIDEBAR */}
+          {}
           <m.div
             className="fixed left-0 top-0 h-full w-95 bg-white z-50 p-5 overflow-y-auto space-y-5"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
           >
-            {/* HEADER */}
+            {}
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold">Filters</h2>
 
@@ -90,13 +87,13 @@ export default function FiltersSidebar({
               </button>
             </div>
 
-            {/* STOCK */}
+            {}
             <div className="flex justify-between border p-3 rounded-md">
               <Label>In Stock</Label>
               <Switch checked={stock === "in"} onCheckedChange={toggleStock} />
             </div>
 
-            {/* BRAND */}
+            {}
             <div className="space-y-1">
               <Label>Brand</Label>
 
@@ -120,7 +117,7 @@ export default function FiltersSidebar({
               </Select>
             </div>
 
-            {/* MATERIAL */}
+            {}
             <div className="space-y-1">
               <Label>Material</Label>
 
@@ -144,7 +141,7 @@ export default function FiltersSidebar({
               </Select>
             </div>
 
-            {/* SIZES */}
+            {}
             <div className="space-y-4">
               <Label>Sizes</Label>
 
@@ -169,7 +166,7 @@ export default function FiltersSidebar({
               ))}
             </div>
 
-            {/* PRICE */}
+            {}
             <PriceFilter
               priceMin={priceMin}
               priceMax={priceMax}
@@ -177,7 +174,7 @@ export default function FiltersSidebar({
               setFilter={setFilter}
             />
 
-            {/* ACTIONS */}
+            {}
             <div className="flex gap-2 pt-4">
               <Button
                 variant="outline"

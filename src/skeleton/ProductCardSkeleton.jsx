@@ -5,23 +5,23 @@ export default function ProductCardSkeleton({ className = "" }) {
   return (
     <div className={`relative group ${className}`}>
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        {/* Image Skeleton */}
+        {}
         <div className="relative h-100 bg-gray-50 flex items-center justify-center overflow-hidden">
           <Skeleton height="100%" width="100%" />
         </div>
 
-        {/* Info Skeleton */}
+        {}
         <div className="p-2">
-          {/* Title Skeleton */}
+          {}
           <div className="h-10 mb-2">
             <Skeleton height={16} width="85%" />
             <Skeleton height={14} width="60%" />
           </div>
 
-          {/* Brand Skeleton */}
+          {}
           <Skeleton height={12} width="70%" className="mb-2" />
 
-          {/* Price Skeleton */}
+          {}
           <div className="flex items-center justify-between mt-1">
             <Skeleton height={16} width="50px" />
             <Skeleton height={14} width="60px" />
