@@ -1,11 +1,13 @@
 "use client";
 
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./store";
 import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { setCartFromLocal, fetchCart } from "./features/cartSlice";
 import { fetchUser } from "./features/authSlice";
+import { setNavbarLinks } from "./features/navbarSlice";
+import { setHomeSections } from "./features/homeSlice";
 
 function AuthRestorer() {
   const dispatch = useDispatch();
@@ -39,9 +41,27 @@ function CartFetcher() {
   return null;
 }
 
-export default function StoreProvider({ children }) {
+function InitializeRedux({ navLinks, homeSections }) {
+  const dispatch = useDispatch();
+  const hydatedNav = useRef(false);
+  const hydatedHome = useRef(false);
+
+  if (navLinks && !hydatedNav.current) {
+    hydatedNav.current = true;
+    dispatch(setNavbarLinks(navLinks));
+  }
+  if (homeSections && !hydatedHome.current) {
+    hydatedHome.current = true;
+    dispatch(setHomeSections(homeSections));
+  }
+
+  return null;
+}
+
+export default function StoreProvider({ children, navLinks, homeSections }) {
   return (
     <Provider store={store}>
+      <InitializeRedux navLinks={navLinks} homeSections={homeSections} />
       <AuthRestorer />
       <CartLoader />
       <CartFetcher />

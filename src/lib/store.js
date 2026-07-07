@@ -6,6 +6,7 @@ import orderReducer from "./features/orderSlice";
 import productsReducer from "./features/productsSlice";
 import reviewsReducer from "./features/reviewsSlice";
 import userReducer from "./features/userSlice";
+import homeReducer from "./features/homeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     products: productsReducer,
     reviews: reviewsReducer,
     user: userReducer,
+    home: homeReducer,
   },
 });

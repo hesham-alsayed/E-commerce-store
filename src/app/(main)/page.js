@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setHomeSections } from "@/lib/features/homeSlice";
 
 import { getAllPages } from "@/api/pageApi";
 
@@ -12,7 +14,7 @@ import Footer from "@/components/Footer";
 import ProductsSection from "@/components/Home/ProductsSection";
 
 const CACHE_KEY = "cached_home_sections";
-const CACHE_TTL = 2 * 24 * 60 * 60 * 1000; 
+const CACHE_TTL = 2 * 24 * 60 * 60 * 1000;
 
 function sortSections(homePage) {
   if (!homePage?.sections) return [];
@@ -24,24 +26,28 @@ function sortSections(homePage) {
 }
 
 export default function Home() {
-  const [sections, setSections] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const { sections: reduxSections, loaded: reduxLoaded } = useSelector((state) => state.home);
+  const [localSections, setLocalSections] = useState([]);
+  const [loading, setLoading] = useState(!reduxLoaded);
 
   useEffect(() => {
+    if (reduxLoaded) {
+      setLoading(false);
+      return;
+    }
+
     const cached = localStorage.getItem(CACHE_KEY);
 
     if (cached) {
       try {
         const { data, timestamp } = JSON.parse(cached);
-
         if (Date.now() - timestamp < CACHE_TTL) {
-          setSections(data || []);
+          setLocalSections(data || []);
           setLoading(false);
           return;
         }
-      } catch {
-        
-      }
+      } catch {}
     }
 
     const fetchPages = async () => {
@@ -51,8 +57,8 @@ export default function Home() {
           (page) => page.slug === "/home",
         );
         const sorted = sortSections(homePage);
-
-        setSections(sorted);
+        setLocalSections(sorted);
+        dispatch(setHomeSections(sorted));
         localStorage.setItem(
           CACHE_KEY,
           JSON.stringify({ data: sorted, timestamp: Date.now() }),
@@ -63,21 +69,20 @@ export default function Home() {
     };
 
     fetchPages();
-  }, []);
+  }, [reduxLoaded, dispatch]);
+
+  const sections = reduxLoaded ? reduxSections : localSections;
 
   if (loading) {
     return (
       <div className="fixed inset-0 z-[9999] bg-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-14 h-14 border-4 border-gray-300 border-t-black rounded-full animate-spin" />
-
           <p className="text-sm text-gray-500">Loading...</p>
         </div>
       </div>
     );
   }
-
-  console.log(sections);
 
   return (
     <section className="mt-15">
@@ -85,10 +90,8 @@ export default function Home() {
         switch (section.type) {
           case "banner":
             return <Hero key={section._id} bannerSection={section} />;
-
           case "text":
             return <TextSection key={section._id} section={section} />;
-
           case "products":
             return <ProductsSection key={section._id} section={section} />;
           default:

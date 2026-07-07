@@ -49,6 +49,11 @@ const navbarSlice = createSlice({
     clearNavbarError(state) {
       state.error = null;
     },
+    setNavbarLinks(state, action) {
+      state.navLinks = formatNavLinks(action.payload);
+      state.loaded = true;
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,5 +74,5 @@ const navbarSlice = createSlice({
   },
 });
 
-export const { clearNavbarError } = navbarSlice.actions;
+export const { clearNavbarError, setNavbarLinks } = navbarSlice.actions;
 export default navbarSlice.reducer;
