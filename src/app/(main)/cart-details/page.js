@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,15 +13,27 @@ import Accordion from "@/components/cart/Accordian";
 import { FaRegCalendarCheck } from "react-icons/fa6";
 import Link from "next/link";
 import { IoIosArrowBack } from "react-icons/io";
-import { updateQuantity, removeFromCart } from "@/lib/features/cartSlice";
+import {
+  updateQuantity,
+  removeFromCart,
+  applyCoupon,
+  removeCoupon,
+  fetchCart,
+} from "@/lib/features/cartSlice";
 import CartPageSkeleton from "@/skeleton/CartPageSkeleton";
 import { FiShoppingCart } from "react-icons/fi";
 import { toast } from "sonner";
+import LoaderSpinnerButton from "@/components/LoaderSpinnerButton";
 
 export default function CartPage() {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { loading, initialized } = cart;
+
+  const [coupon, setCoupon] = useState("");
+  const [errorCoupon, setErrorCoupon] = useState("");
+  const [loadingCoupon, setLoadingCoupon] = useState(false);
+  const [loadingRemove, setLoadingRemove] = useState(false);
 
   const isLoading = loading || !cart || !initialized;
 
@@ -48,6 +61,48 @@ export default function CartPage() {
     dispatch(removeFromCart(item._id));
   };
 
+  const handleApplyCoupon = async () => {
+    try {
+      if (!coupon.trim()) {
+        setErrorCoupon("Please enter a coupon code");
+        return;
+      }
+
+      if (coupon.trim().length < 3) {
+        setErrorCoupon("Invalid coupon code");
+        return;
+      }
+
+      setLoadingCoupon(true);
+
+      await dispatch(applyCoupon(coupon.trim())).unwrap();
+
+      setErrorCoupon("");
+      setCoupon("");
+
+      await dispatch(fetchCart());
+
+      toast.success("Coupon applied");
+    } catch (error) {
+      setErrorCoupon(error || "Error applying coupon");
+    } finally {
+      setLoadingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = async () => {
+    try {
+      setLoadingRemove(true);
+      await dispatch(removeCoupon()).unwrap();
+      await dispatch(fetchCart());
+      toast.success("Coupon removed");
+    } catch (error) {
+      toast.error(error?.message || error || "Error removing coupon");
+    } finally {
+      setLoadingRemove(false);
+    }
+  };
+
   if (!isLoading && items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh] text-center">
@@ -63,13 +118,11 @@ export default function CartPage() {
       </div>
     );
   }
-  console.log(items);
 
   return (
     <>
       {items.length > 0 ? (
         <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {}
           <div className="lg:col-span-2 space-y-6">
             <h1 className="text-[30px]">Your cart ({items.length})</h1>
 
@@ -124,20 +177,51 @@ export default function CartPage() {
             ))}
           </div>
 
-          {}
           <div>
             <Card className="p-5 space-y-5 bg-white border rounded-xl shadow-sm">
               <Accordion title="Discount code" icon={TbDiscount}>
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Enter coupon code"
-                    className="h-9 focus-visible:ring-0 border-gray-200 bg-gray-50"
-                  />
+                {cart?.coupon ? (
+                  <div className="flex items-center justify-between p-2 border rounded bg-green-50 border-green-200">
+                    <div>
+                      <p className="text-xs text-green-700 font-medium">
+                        Coupon Applied
+                      </p>
+                      <p className="text-xs text-green-600">{cart.coupon.code}</p>
+                    </div>
 
-                  <button className="h-9 px-4 rounded-md bg-black text-white text-sm hover:opacity-90 transition">
-                    Apply
-                  </button>
-                </div>
+                    <button
+                      onClick={handleRemoveCoupon}
+                      disabled={loadingRemove}
+                      className="w-14 flex items-center justify-center text-xs text-red-600 hover:underline"
+                    >
+                      {loadingRemove ? <LoaderSpinnerButton color="red" /> : "Remove"}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Enter coupon code"
+                      value={coupon}
+                      onChange={(e) => {
+                        setCoupon(e.target.value);
+                        setErrorCoupon("");
+                      }}
+                      className="h-9 focus-visible:ring-0 border-gray-200 bg-gray-50"
+                    />
+
+                    <button
+                      onClick={handleApplyCoupon}
+                      disabled={loadingCoupon || !coupon.trim()}
+                      className="h-9 px-4 rounded-md bg-black text-white text-sm hover:opacity-90 transition w-20 flex items-center justify-center"
+                    >
+                      {loadingCoupon ? <LoaderSpinnerButton color="white" /> : "Apply"}
+                    </button>
+                  </div>
+                )}
+
+                {errorCoupon && (
+                  <p className="text-xs text-red-500 mt-1">{errorCoupon}</p>
+                )}
               </Accordion>
 
               <Accordion title="Order note" icon={TfiNotepad}>
@@ -150,12 +234,21 @@ export default function CartPage() {
                   <span>LE {cart?.totalPrice?.toFixed(2)}</span>
                 </div>
 
+                {cart?.discountAmount > 0 && (
+                  <div className="flex justify-between text-red-500">
+                    <span>Discount</span>
+                    <span>- LE {cart.discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
+
                 <div className="flex justify-between font-semibold pt-2 border-t">
                   <span>Total</span>
                   <span>
                     LE{" "}
-                    {cart?.totalPriceAfterDiscount?.toFixed(2) ||
-                      cart?.totalPrice?.toFixed(2)}
+                    {(cart?.totalPriceAfterDiscount > 0
+                      ? cart.totalPriceAfterDiscount
+                      : cart?.totalPrice || 0
+                    ).toFixed(2)}
                   </span>
                 </div>
               </div>
