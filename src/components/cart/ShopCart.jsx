@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 import { DeleteModal } from "@/modal/DeleteModal";
 import { apiFetch } from "@/api";
 import { useDispatch, useSelector } from "react-redux";
-import { updateQuantity, removeFromCart, applyCoupon, removeCoupon, fetchCart } from "@/lib/features/cartSlice";
+import { updateQuantity, removeFromCart, applyCoupon, removeCoupon } from "@/lib/features/cartSlice";
 
 export default function ShopCart({ isOpen, setShopCartOpen }) {
   const dispatch = useDispatch();
@@ -109,8 +109,6 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
       setErrorCoupon("");
       setCoupon("");
 
-      await dispatch(fetchCart());
-
       toast.success("Coupon applied");
     } catch (error) {
       setErrorCoupon(error || "Error applying coupon");
@@ -128,7 +126,6 @@ export default function ShopCart({ isOpen, setShopCartOpen }) {
     try {
       setLoadingRemove(true);
       await dispatch(removeCoupon()).unwrap();
-      await dispatch(fetchCart());
       toast.success("coupon removed");
     } catch (error) {
       toast.error(error?.message || error || "Error in Remove Coupon");

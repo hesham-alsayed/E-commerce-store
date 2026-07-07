@@ -18,7 +18,6 @@ import {
   removeFromCart,
   applyCoupon,
   removeCoupon,
-  fetchCart,
 } from "@/lib/features/cartSlice";
 import CartPageSkeleton from "@/skeleton/CartPageSkeleton";
 import { FiShoppingCart } from "react-icons/fi";
@@ -80,8 +79,6 @@ export default function CartPage() {
       setErrorCoupon("");
       setCoupon("");
 
-      await dispatch(fetchCart());
-
       toast.success("Coupon applied");
     } catch (error) {
       setErrorCoupon(error || "Error applying coupon");
@@ -94,7 +91,6 @@ export default function CartPage() {
     try {
       setLoadingRemove(true);
       await dispatch(removeCoupon()).unwrap();
-      await dispatch(fetchCart());
       toast.success("Coupon removed");
     } catch (error) {
       toast.error(error?.message || error || "Error removing coupon");
