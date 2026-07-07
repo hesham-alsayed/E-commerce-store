@@ -43,9 +43,11 @@ export default function Icons({ setShopCartOpen }) {
           size={17}
           className="hover:text-gray-700 transition-colors"
         />
-        <div className="absolute -top-1 -right-2 w-4 h-4 bg-red-600 text-white text-xs flex items-center justify-center rounded-full">
-          {count}
-        </div>
+        {count > 0 && (
+          <div className="absolute -top-1 -right-2 w-4 h-4 bg-red-600 text-white text-xs flex items-center justify-center rounded-full">
+            {count}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -19,9 +19,11 @@ export default function HeaderCart({ setShopCartOpen }) {
     <div className="flex justify-between items-center mb-4">
       <div className="relative text-[17px] font-medium text-gray-800 flex items-center">
         Cart
-        <span className="bg-gray-200 text-black w-5 h-5 flex items-center justify-center rounded absolute top-0 -right-8 text-xs">
-          {count}
-        </span>
+        {count > 0 && (
+          <span className="bg-gray-200 text-black w-5 h-5 flex items-center justify-center rounded absolute top-0 -right-8 text-xs">
+            {count}
+          </span>
+        )}
       </div>
 
       <div className="flex items-center gap-8">
