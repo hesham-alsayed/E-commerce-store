@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import LoaderSpinnerButton from "@/components/LoaderSpinnerButton";
 import { KeyRound, CheckCircle, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { resetPassword } from "@/api/authApi";
 
 export default function ResetPassword() {
-  const { token } = useParams();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const router = useRouter();
 
   const {
