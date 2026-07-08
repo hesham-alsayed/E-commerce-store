@@ -9,10 +9,11 @@ import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CurrentRoute from "@/views/CurrentRoute";
+import WishlistSkeleton from "@/skeleton/WishlistSkeleton";
 
 export default function WishlistPage() {
   const dispatch = useDispatch();
-  const { wishlist } = useSelector((state) => state.user);
+  const { wishlist, loading } = useSelector((state) => state.user);
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const rowsPerPage = 3;
@@ -41,7 +42,9 @@ export default function WishlistPage() {
   return (
     <div className="min-h-[70vh] flex flex-col">
       <CurrentRoute />
-      {!hasData ? (
+      {loading ? (
+        <WishlistSkeleton />
+      ) : !hasData ? (
         <div className="flex flex-col items-center justify-center text-center py-20 px-6">
           {}
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
