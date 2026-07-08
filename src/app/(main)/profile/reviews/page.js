@@ -66,9 +66,7 @@ export default function ReviewsPage() {
   if (loading) return <ReviewsPageSkeleton />;
   return (
     <div className="space-y-4">
-      <div className="mt-4">
-        <CurrentRoute />
-      </div>
+      <CurrentRoute />
 
       <h1 className="text-2xl font-semibold">My Reviews</h1>
       <p className="text-sm text-gray-500">

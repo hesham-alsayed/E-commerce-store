@@ -49,7 +49,7 @@ export default function AddressesPage() {
   const isEmpty = safeAddresses.length === 0;
 
   return (
-    <div className="max-w-6xl mx-auto flex flex-col mt-10 space-y-6">
+    <div className="flex flex-col space-y-6">
       <CurrentRoute />
 
       {}

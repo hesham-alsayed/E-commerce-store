@@ -23,7 +23,8 @@ export default function UserOrdersPage() {
   console.log(orders);
 
   return (
-    <div className="p-4">
+    <div>
+      <CurrentRoute />
       {error ? (
         <div className="text-center py-20 text-red-500 text-sm">{error}</div>
       ) : loading ? (
@@ -32,7 +33,6 @@ export default function UserOrdersPage() {
         <UserEmptyOrders />
       ) : (
         <>
-          <CurrentRoute />
           <OrdersTable
             orders={orders}
             currentPage={currentPage}

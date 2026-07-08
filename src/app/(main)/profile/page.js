@@ -58,14 +58,11 @@ export default function DashboardPage() {
   if (loading || !user) return <DashboardPageSkeleton />;
 
   return (
-    <div className="min-h-screen py-4">
+    <div className="space-y-8">
       <CurrentRoute />
-
-      <div className="max-w-6xl mx-auto space-y-8">
-        <ProfileSection />
-        <SummaryCard stats={stats} />
-        <CurrentOrders orders={orders || []} />
-      </div>
+      <ProfileSection />
+      <SummaryCard stats={stats} />
+      <CurrentOrders orders={orders || []} />
     </div>
   );
 }

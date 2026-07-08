@@ -8,6 +8,7 @@ import { fetchWishlist, removeItemWishlist } from "@/lib/features/userSlice";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import CurrentRoute from "@/views/CurrentRoute";
 
 export default function WishlistPage() {
   const dispatch = useDispatch();
@@ -38,8 +39,8 @@ export default function WishlistPage() {
   const hasData = safeWishlist.length > 0;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 min-h-[70vh] flex flex-col">
-      {}
+    <div className="min-h-[70vh] flex flex-col">
+      <CurrentRoute />
       {!hasData ? (
         <div className="flex flex-col items-center justify-center text-center py-20 px-6">
           {}

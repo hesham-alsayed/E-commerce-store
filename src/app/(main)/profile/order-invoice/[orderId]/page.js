@@ -68,7 +68,7 @@ export default function OrderInvoicePage() {
   if (!order) return <OrderInvoiceSkeleton />;
 
   return (
-    <div className="max-w-5xl mx-auto mt-20 ">
+    <div>
       <InvoiceActions
         onPrint={() => handlePrint()}
         onDownload={downloadPDF}

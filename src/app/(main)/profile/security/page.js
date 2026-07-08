@@ -25,7 +25,7 @@ export default function SecurityPage() {
   };
 
   return (
-    <div className="mt-12 md:mt-4 px-4">
+    <div>
       {}
       <CurrentRoute />
 

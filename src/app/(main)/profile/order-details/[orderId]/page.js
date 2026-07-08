@@ -7,6 +7,7 @@ import PaymentInfo from "@/components/order/PaymentInfo";
 import PaymentSummary from "@/components/order/PaymentSummary";
 import ShippingInfo from "@/components/order/ShippingInfo";
 import { useDispatch, useSelector } from "react-redux";
+import CurrentRoute from "@/views/CurrentRoute";
 import { fetchOrderById } from "@/lib/features/orderSlice";
 import OrderDetailsSkeleton from "@/skeleton/OrderDetailsSkeleton";
 import { useEffect } from "react";
@@ -30,8 +31,8 @@ export default function OrderDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen  p-8 mt-4 ">
-      {}
+    <div>
+      <CurrentRoute />
       <OrderHeader order={order} />
       <div className="grid grid-cols-1 mt-4 lg:grid-cols-3 gap-6">
         {}
