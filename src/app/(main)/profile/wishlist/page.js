@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWishlist, removeItemWishlist } from "@/lib/features/userSlice";
 import { Heart } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import CurrentRoute from "@/views/CurrentRoute";
 import WishlistSkeleton from "@/skeleton/WishlistSkeleton";
@@ -17,10 +17,14 @@ export default function WishlistPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const rowsPerPage = 3;
+  const mounted = useRef(false);
 
   useEffect(() => {
+    mounted.current = true;
     dispatch(fetchWishlist());
   }, [dispatch]);
+
+  if (!mounted.current || loading) return <WishlistSkeleton />;
 
   const safeWishlist = wishlist || [];
 
