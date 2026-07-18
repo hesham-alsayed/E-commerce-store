@@ -45,7 +45,7 @@ export function LoginForm({ onSignUpClick }) {
   const { actionLoading } = useSelector(state => state.auth);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const from = searchParams.get("from") || "/";
+  const from = searchParams.get("from") || "/profile";
 
   const {
     register,
