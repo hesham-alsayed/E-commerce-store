@@ -90,7 +90,7 @@ export default function VerifyEmailPage() {
           </p>
           <Button
             className="w-full h-12 text-base font-medium"
-            onClick={() => router.push("/auth/?mode=login")}
+            onClick={() => router.push("/auth?mode=login")}
           >
             Continue to Login
           </Button>
@@ -103,7 +103,7 @@ export default function VerifyEmailPage() {
     <main className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <button
-          onClick={() => router.push("/auth/?mode=login")}
+          onClick={() => router.push("/auth?mode=login")}
           className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMyOrders } from "@/lib/features/orderSlice";
 import { fetchUser } from "@/lib/features/authSlice";
 import { useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import CurrentRoute from "@/views/CurrentRoute";
 import ProfileSection from "@/components/profile/dashboard/ProfileSection";
 import SummaryCard from "@/components/profile/dashboard/SummaryCard";
@@ -18,9 +17,7 @@ export default function DashboardPage() {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(fetchUser()).unwrap().catch(() => {
-      router.replace("/auth?mode=login");
-    });
+    dispatch(fetchUser()).unwrap().catch(() => {});
     dispatch(fetchMyOrders());
   }, [dispatch]);
 

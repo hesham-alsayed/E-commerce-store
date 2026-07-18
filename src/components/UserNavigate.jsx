@@ -33,6 +33,8 @@ export default function UserNavigate({ user, onLogout }) {
     }
   };
 
+  if (user === undefined) return null;
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
