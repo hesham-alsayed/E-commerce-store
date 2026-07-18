@@ -38,6 +38,7 @@ export const login = createAsyncThunk("auth/login", async (data, { rejectWithVal
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   await logoutApi();
+  document.cookie = "jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax";
 });
 
 export const signup = createAsyncThunk("auth/signup", async (data, { rejectWithValue }) => {

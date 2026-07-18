@@ -1,7 +1,6 @@
 "use client";
 
 import { FiSearch, FiShoppingCart } from "react-icons/fi";
-import { useRouter } from "next/navigation";
 import UserNavigate from "./UserNavigate";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpenSearch } from "@/lib/features/productsSlice";
@@ -12,13 +11,12 @@ export default function Icons({ setShopCartOpen }) {
   const { user } = useSelector(state => state.auth);
   const cart = useSelector(state => state.cart);
   const count = cart.initialized ? (cart?.items?.length || 0) : null;
-  const router = useRouter();
 
   const handleLogout = async () => {
     try {
       await dispatch(logout()).unwrap();
       sessionStorage.removeItem("lastPath");
-      router.push("/auth?mode=login");
+      window.location.href = "/auth?mode=login";
     } catch (err) {
       console.error(err);
     }
