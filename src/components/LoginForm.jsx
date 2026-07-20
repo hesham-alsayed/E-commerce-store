@@ -106,6 +106,12 @@ export function LoginForm({ onSignUpClick }) {
         <CardDescription className="text-center">
           Enter your credentials to sign in
         </CardDescription>
+
+        <div className="mt-3 rounded-lg bg-yellow-50 border border-yellow-200 p-3 text-xs text-yellow-800 space-y-1">
+          <p className="font-medium">Demo Credentials</p>
+          <p>Email: <span className="font-mono">hishamgomaa19@gmail.com</span></p>
+          <p>Pass: <span className="font-mono">Hh123@#$</span></p>
+        </div>
       </CardHeader>
 
       <CardContent>
